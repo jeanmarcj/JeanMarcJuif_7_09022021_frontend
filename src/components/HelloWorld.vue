@@ -1,6 +1,13 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <!-- Test boostrap Version 5 -->
+    <div class="container">
+      <div class="alert alert-success alert-dismissible" role="alert">
+        With popperjs & bootstrap 5.1.0 !
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    </div>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the

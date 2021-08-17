@@ -2,12 +2,15 @@
 
 GitHub repository : [lien](https://github.com/jeanmarcj/JeanMarcJuif_7_09022021_frontend.git)
 
-Vue is configured with :
-vue router
-vuex
-Node Sass
+Vue CLI Plugins :
+babel - router - vuex - eslint - sass
+
 ----------------------------------------------------------------
 Boostrap V5 with node
+
+Warning : do not update node-sass@6.0.1 with node v14.17.5.
+node-sass@6.0.1 is for node v16
+
 
 
 ## Project setup
