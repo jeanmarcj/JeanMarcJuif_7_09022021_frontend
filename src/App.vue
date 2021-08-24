@@ -30,17 +30,15 @@
                 <button class="btn btn-primary d-block w-100" type="submit">
                   Sign in
                 </button>
-                <p class="fs-sm pt-3 mb-0">
-                  Don't have an account ?
-                  <a href="#" class="fw-medium" data-view="#modal-signup-view">Sign Up</a>
-                </p>
               </form>
             </div><!-- modal body -->
-          </div><!-- view show -->
+          </div><!-- #modal-signin-view -->
         </div>
       </div>
     </div><!-- end SignIn modal -->
-    
+    <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-shadow navbar-sticky">
+
+    </header>
     <div id="nav">
       <router-link to="/">Home</router-link>&nbsp;|
       <router-link to="/about">About</router-link>&nbsp;|&nbsp;
@@ -48,7 +46,8 @@
         <i class="bi bi-person fs-xl me-2"></i>
         Sign in
       </a>
-      <a href="#modal-signin" class="btn btn-primary ms-grid-gutter d-none d-lg-inline-block mx-2" data-bs-toggle="modal" data-view="#modal-signup-view">Sign Up</a>
+      <router-link to="/signup" class="btn btn-primary ms-grid-gutter d-none d-lg-inline-block mx-2">Sign Up</router-link>
+      <!-- <a href="#modal-signin" class="btn btn-primary ms-grid-gutter d-none d-lg-inline-block mx-2" data-bs-toggle="modal" data-view="#modal-signup-view">Sign Up</a> -->
     </div>
     <router-view/>
   </div>
@@ -74,6 +73,13 @@
       color: #42b983;
     }
   }
+}
+// Modal
+.view {
+  display: none;
+}
+.view.show {
+  display: block;
 }
 .modal-content {
   border-radius: 1rem !important;
@@ -112,18 +118,21 @@ input.rounded {
 }
 
 .btn-primary {
-    background-color: #766df4 !important;
-    border-color: #766df4 !important;
-    box-shadow: unset !important;
-    color: white !important;
-
+  background-color: #766df4 !important;
+  border-color: #766df4 !important;
+  box-shadow: unset !important;
+  color: white !important;
 }
 
 .btn-primary:hover {
-    background-color: #5549f1 !important;
-    border-color: #5549f1 !important;
-    color: #fff !important;
+  background-color: #5549f1 !important;
+  border-color: #5549f1 !important;
+  color: #fff !important;
 }
 
-
+/** NavBar */
+.header {
+  position: relative;
+  z-index: 1030;
+}
 </style>
