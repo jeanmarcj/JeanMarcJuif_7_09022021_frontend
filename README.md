@@ -32,3 +32,33 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+============================================================================
+Router :
+
+{
+    path: "/story/:id",
+    name: "post",
+    component: () => import("@/pages/Post.vue")
+}
+
+Text interpolation : {{avatar}}
+
+Binding to attributs :
+Inside a component
+<img v-bind:src="avatar" height="300" width="300" />
+
+<div v-if="isSuccess">
+    We dit it successful !
+</div>
+
+// Cette div sera masquée
+<div v-if="!isSuccess">
+    We did not do it. Not successful.
+</div> 
+<script>
+    data {
+        avatar: "http://...",
+        isSuccess: true,
+    }
+</script>
