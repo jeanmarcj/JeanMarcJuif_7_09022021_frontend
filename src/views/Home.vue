@@ -14,13 +14,21 @@
             <input class="form-control" type="text" placeholder="Search...">
           </div>
         </div>
-        <!-- Last 3 posts -->
+
+        <!-- Last 3 posts widget -->
         <div class="widget mt-n1 mb-5">
           <h3 class="widget-title pb-1 text-start">Last posts</h3>
             <!-- Lats 3 post components -->
             <LastPosts />
         </div>
-        <!-- End Last 3 posts hard coded -->
+        <!-- Total Posts widget -->
+        <hr>
+        <div class="widget mt-n1 mb-5">
+          <h3 class="widget-title pb-1">Total posts</h3>
+          <TotalPosts />
+        </div>
+        <hr>
+        
       </div>
       <!-- Content -->
       <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
@@ -38,11 +46,13 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import LastPosts from '@/components/LastPosts.vue'
+import TotalPosts from '@/components/TotalPosts.vue'
 
 export default {
   components: {
     HelloWorld,
-    LastPosts
+    LastPosts,
+    TotalPosts
   }
 }
 </script>
