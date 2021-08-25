@@ -1,7 +1,7 @@
 <template>
   <div id="lastPosts">
     <div v-for="post in posts" :key="post.id">
-        <div class="d-flex align-items-center pb-1 mb-5">
+        <div class="d-flex align-items-center pb-1 mb-3">
           <a class="d-block flex-shrink-0" href="#">
             <img class="rounded" src="../assets/icon.png" alt="Post" width="64">
           </a>
@@ -26,7 +26,7 @@ export default {
   },
   created() {
     // Get request using fetch with error handling
-    fetch("http://localhost:3000/posts")
+    fetch("http://localhost:3000/posts/lastpublishedposts")
     .then(async response => {
       const data = await response.json();
 
