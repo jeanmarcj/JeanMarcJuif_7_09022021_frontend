@@ -3,7 +3,7 @@
     <div v-for="post in posts" :key="post.id">
         <div class="d-flex align-items-center pb-1 mb-3">
           <a class="d-block flex-shrink-0" href="#">
-            <img class="rounded" src="../assets/icon.png" alt="Post" width="64">
+            <img class="rounded" src="../../assets/icon.png" alt="Post" width="64">
           </a>
           <div class="ps-2 ms-1">
             <h4 class="fs-md nav-heading mb-1 text-start">
