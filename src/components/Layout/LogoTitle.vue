@@ -18,7 +18,7 @@ export default {
 <style scoped lang="scss">
 
 .text-info {
-  color: #6a9bf4 !important;
+  color: #37384e !important;
 }
 
 </style>
