@@ -87,7 +87,7 @@ export default {
           // this.$store.commit('save_userFirstName', data.firstName);
           
           // Redirect to a route (url)
-          this.$router.push("About");
+          this.$router.push("Bloglist");
         })
         .catch(error => {
           this.errorMessage.message = 'There was an error : ' + error;
