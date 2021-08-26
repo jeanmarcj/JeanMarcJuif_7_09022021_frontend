@@ -1,56 +1,62 @@
 <template>
-<div class="sidebar-enabled">
-  <div class="container">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="sidebar col-lg-3 pt-lg-5">
-        <!-- Search -->
-        <div class="widget mb-5">
-          <h3 class="widget-title text-start">Search Blog</h3>
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-search"></i>
-            </span>
-            <input class="form-control" type="text" placeholder="Search...">
-          </div>
-        </div>
+  <div class="wrapper">
+    <div class="sidebar-enabled">
+      <div class="container">
+        <nav>
+          <MainNav />
+        </nav>
+        <div class="row">
+          <!-- Sidebar -->
+          <div class="sidebar col-lg-3 pt-lg-5">
+            <!-- Search -->
+            <div class="widget mb-5">
+              <h3 class="widget-title text-start">Search Blog</h3>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input class="form-control" type="text" placeholder="Search...">
+              </div>
+            </div>
 
-        <!-- Last 3 posts widget -->
-        <div class="widget mt-n1 mb-5">
-          <h3 class="widget-title pb-1 text-start">Last posts</h3>
-            <!-- Lats 3 post components -->
-            <LastPosts />
-        </div>
-        <!-- Total Posts widget -->
-        <hr>
-        <div class="widget mt-n1 mb-5">
-          <h3 class="widget-title pb-1">Total posts</h3>
-          <TotalPosts />
-        </div>
-        <hr>
-        
-      </div>
-      <!-- Content -->
-      <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
-        <div class="home">
-          <HelloWorld msg="Groupomania Expression App"/>
+            <!-- Last 3 posts widget -->
+            <div class="widget mt-n1 mb-5">
+              <h3 class="widget-title pb-1 text-start">Last posts</h3>
+                <!-- Lats 3 post components -->
+                <LastPosts />
+            </div>
+            <!-- Total Posts widget -->
+            <hr>
+            <div class="widget mt-n1 mb-5">
+              <h3 class="widget-title pb-1">Total posts</h3>
+              <TotalPosts />
+            </div>
+            <hr>
+            
+          </div>
+          <!-- Content -->
+          <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
+            <div class="home">
+              <HelloWorld msg="Groupomania Expression App"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-</div>
 </template>
 
 <script>
 // @ is an alias to /src
+import MainNav from '@/components/Layout/MainNav.vue';
 import HelloWorld from '@/components/HelloWorld.vue'
-import LastPosts from '@/components/LastPosts.vue'
-import TotalPosts from '@/components/TotalPosts.vue'
+import LastPosts from '@/components/Widgets/LastPosts.vue'
+import TotalPosts from '@/components/Widgets/TotalPosts.vue'
 
 export default {
   components: {
     HelloWorld,
+    MainNav,
     LastPosts,
     TotalPosts
   }
