@@ -14,10 +14,6 @@
                     <h2 class="h4 mb-4 nav-heading text-start">
                         <a href="">Payments made easy. How new Tech will affect E-Commerce industry ?</a>
                     </h2>
-                    <!-- <p class="card-text text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text text-start">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </p> -->
                     <a href="" class="d-flex meta-link fs-sm align-items-center pt-3">
                         <img class="rounded-circle" src="../../assets/icon.png" width="36" alt="Author's Name">
                         <div class="ps-2 ms-1 mt-n1">
