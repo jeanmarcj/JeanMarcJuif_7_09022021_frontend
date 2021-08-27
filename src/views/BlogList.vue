@@ -1,13 +1,11 @@
 <template>
   <div class="wrapper">
+    <NavBarLight />
     <div class="sidebar-enabled">
       <div class="container">
-        <nav>
-          <MainNav />
-        </nav>
         <div class="row">
           <!-- Sidebar -->
-          <div class="sidebar col-lg-3 pt-lg-5">
+          <div class="sidebar col-lg-3 pt-lg-5 container-fluid">
             <!-- Search -->
             <div class="widget mb-5">
               <h3 class="widget-title text-start">Search Blog</h3>
@@ -48,15 +46,16 @@
 
 <script>
 // @ is an alias to /src
-import MainNav from '@/components/Layout/MainNav.vue';
-import HelloWorld from '@/components/HelloWorld.vue'
-import LastPosts from '@/components/Widgets/LastPosts.vue'
-import TotalPosts from '@/components/Widgets/TotalPosts.vue'
+import NavBarLight from '@/components/Layout/NavBarLight.vue';
+import LastPosts from '@/components/Widgets/LastPosts.vue';
+import TotalPosts from '@/components/Widgets/TotalPosts.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
+
 
 export default {
   components: {
+    NavBarLight,
     HelloWorld,
-    MainNav,
     LastPosts,
     TotalPosts
   }
