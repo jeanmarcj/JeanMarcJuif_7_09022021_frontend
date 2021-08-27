@@ -13,7 +13,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link to="/about" class="nav-link">About</router-link>
+              <router-link to="/about" class="nav-link">
+                <i class="bi bi-info"></i>
+                About
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/bloglist" class="nav-link active">
@@ -89,13 +92,6 @@ export default {
   color: #5a5b75;
   font-weight: 500;
   text-decoration: none;
-  // &:hover {
-  //   color: #766df4 !important;
-  //   text-decoration: none;
-  // }
-  // &:visited {
-  //   color: #5a5b75;
-  // }
 }
 .dropdown-item:hover, .nav-link:hover {
     color: #766df4 !important;
@@ -112,6 +108,10 @@ export default {
 }
 .text-danger {
   color: #f74f78 !important;
+}
+
+.bi.bi-info {
+  margin-right: -.3rem;
 }
 
 </style>
