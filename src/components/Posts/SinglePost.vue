@@ -1,13 +1,33 @@
 <template>
-  <div class="d-flex align-items-center pb-1 mb-5">
-    <a class="d-block flex-shrink-0" href="#">
-      <img class="rounded" src="../assets/icon.png" alt="Post" width="64">
-    </a>
-    <div class="ps-2 ms-1">
-      <h4 class="fs-md nav-heading mb-1 text-start">
-        <a class="fw-medium" href="#">{{postTitle}}</a>
-      </h4>
-      <p class="fs-xs text-muted mb-0 text-start">by {{authorFirstName}}&nbsp;{{authorLastName}}</p>
+  <div class="pb-4" Style="max-width: 38rem;">
+    <h1 class="text-start ms-5">{{postTitle}}</h1>
+    <!-- Post author -->
+    <div class="row position-relative g-0 align-items-center border-top border-bottom mb-4">
+      <div class="col-md-6 py-3 pe-md-3">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+          <div class="d-flex align-items-center me-grid-gutter">
+            <a href="" class="d-block">
+              <img class="rounded-circle me-1" src="../../assets/icon.png" alt="Author's image" width="64">
+            </a>
+            <div class="ps-2">
+              <h6 class="nav-heading mb-1">
+                <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a>
+              </h6>
+              <div class="text-nowrap d-flex">
+                <div class="meta-link fs-xs">
+                    <i class="bi bi-calendar ms-1"></i>
+                    &nbsp;12 Août
+                </div>
+                <span class="meta-divider"></span>
+                <div class="meta-link fs-xs">
+                    <i class="bi bi-chat-left"></i>
+                    &nbsp;3
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,7 +39,8 @@ export default {
     return {
       postTitle: null,
       authorFirstName: null,
-      authorLastName: null
+      authorLastName: null,
+      postContent: null
     };
   },
   created() {
@@ -37,6 +58,7 @@ export default {
       this.postTitle = data.title;
       this.authorFirstName = data.user.firstName;
       this.authorLastName = data.user.lastName;
+      this.postContent = data.content;
     })
     .catch(err => {
       this.errorMessage = err;
@@ -48,26 +70,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  
-  h4 {
-    line-height: 0.8;
+  .me-grid-gutter {
+    margin-right: 1.875rem !important;
   }
-  a {
-    text-decoration: none;
+  .nav-heading, .nav-heading a,
+  .nav-heading .nav-heading-title {
     transition: color .25s ease-in-out,background-color .25s ease-in-out,box-shadow .25s ease-in-out,border-color .25s ease-in-out;
     color: #4a4b65;
     font-weight: 600;
-    font-size: 1rem;
     text-decoration: none;
-    &:hover {
-      color: #493ef0;
-    }
   }
-  .fw-medium {
-    font-weight: 500 !important;
+  .meta-link {
+    transition: color .2s ease-in-out;
+    color: #797a95;
+    vertical-align: middle;
+    text-decoration: none;
   }
   .fs-xs {
     font-size: 0.75rem !important;
+  }
+  .meta-link:hover {
+    color: #4d4e64;
+    text-decoration: none;
+  }
+  .meta-divider {
+      display: inline-block;
+      width: 1px;
+      height: 1rem;
+      margin: 0 .625rem;
+      background-color: #dfdfec;
+      vertical-align: middle;
   }
 
 </style>
