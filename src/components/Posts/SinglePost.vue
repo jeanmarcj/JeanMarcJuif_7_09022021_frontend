@@ -1,8 +1,8 @@
 <template>
-  <div class="pb-4" Style="max-width: 38rem;">
+  <div class="pb-4">
     <h1 class="text-start ms-5">{{postTitle}}</h1>
     <!-- Post author -->
-    <div class="row position-relative g-0 align-items-center border-top border-bottom mb-4">
+    <div class="row position-relative g-0 align-items-center border-top border-bottom mb-4 ms-5">
       <div class="col-md-6 py-3 pe-md-3">
         <div class="d-flex align-items-center justify-content-center justify-content-md-start">
           <div class="d-flex align-items-center me-grid-gutter">
@@ -10,24 +10,32 @@
               <img class="rounded-circle me-1" src="../../assets/icon.png" alt="Author's image" width="64">
             </a>
             <div class="ps-2">
-              <h6 class="nav-heading mb-1">
+              <h6 class="nav-heading mb-1 text-start">
                 <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a>
               </h6>
               <div class="text-nowrap d-flex">
                 <div class="meta-link fs-xs">
                     <i class="bi bi-calendar ms-1"></i>
-                    &nbsp;12 Août
+                    &nbsp;{{postCreatedAt}}
                 </div>
                 <span class="meta-divider"></span>
                 <div class="meta-link fs-xs">
                     <i class="bi bi-chat-left"></i>
                     &nbsp;3
                 </div>
+                <span class="meta-divider"></span>
+                <router-link to="/blogedit" class="meta-link" v-if="authorIsAdmin" title="Edit this post">
+                  <i class="bi bi-pen-fill text-success"></i>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <!-- Post content -->
+    <div class="text-start ms-5">
+      {{postContent}}
     </div>
   </div>
 </template>
@@ -40,7 +48,9 @@ export default {
       postTitle: null,
       authorFirstName: null,
       authorLastName: null,
-      postContent: null
+      authorIsAdmin: false,
+      postCreatedAt: null,
+      postContent: null,
     };
   },
   created() {
@@ -55,10 +65,16 @@ export default {
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
       }
-      this.postTitle = data.title;
       this.authorFirstName = data.user.firstName;
       this.authorLastName = data.user.lastName;
+      this.authorIsAdmin = data.user.isAdmin;
+
+      this.postTitle = data.title;
       this.postContent = data.content;
+      let tempPostCreatedAt = new Date(data.createdAt);
+      let options = {year: "numeric", month: "long", day: "numeric"};
+      // deliveryDate.toLocaleDateString("fr-FR", options);
+      this.postCreatedAt = tempPostCreatedAt.toLocaleDateString("fr-FR", options);
     })
     .catch(err => {
       this.errorMessage = err;
