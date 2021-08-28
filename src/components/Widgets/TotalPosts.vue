@@ -13,6 +13,7 @@ export default {
     }
   },
   created() {
+    
     // Get request using fetch with error handling
     fetch("http://localhost:3000/posts/totalpublishedposts/")
     .then(async response => {
