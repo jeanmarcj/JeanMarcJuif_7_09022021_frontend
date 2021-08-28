@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    // Log into the app
     path: '/',
     name: 'Home',
     component: Home
@@ -20,21 +21,31 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    // Create a new User
     path: '/signup',
     name: 'SignUp',
     component: () => import(/* webpackChunkName: "signup" */ '../views/SignUp.vue')
   },
   {
+    // View all published Posts (list)
     path: '/bloglist',
     name: 'Bloglist',
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogList.vue')
   },
   {
-    path: '/blogedit',
+    // Read a sigle Post
+    path: '/post/:id',
+    name: 'PostSingle',
+    component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogSingle.vue')
+  },
+  {
+    // Edit a single post
+    path: '/blogedit/:id',
     name: 'Blogedit',
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogEdit.vue')
   },
   {
+    // View the user account
     path: '/account',
     name: 'Account',
     component: () => import(/* webpackChunkName: "account" */ '../views/Account.vue')
