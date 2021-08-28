@@ -24,7 +24,7 @@
                     &nbsp;3
                 </div>
                 <span class="meta-divider"></span>
-                <router-link to="/blogedit" class="meta-link" v-if="authorIsAdmin" title="Edit this post">
+                <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="authorIsAdmin" title="Edit this post">
                   <i class="bi bi-pen-fill text-success"></i>
                 </router-link>
               </div>
@@ -51,11 +51,12 @@ export default {
       authorIsAdmin: false,
       postCreatedAt: null,
       postContent: null,
+      postId: null
     };
   },
   created() {
     // Get request using fetch with error handling
-    fetch("http://localhost:3000/posts/2")
+    fetch("http://localhost:3000/posts/" + this.$route.params.id)
     .then(async response => {
       const data = await response.json();
 
@@ -65,12 +66,15 @@ export default {
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
       }
+      console.log(data);
       this.authorFirstName = data.user.firstName;
       this.authorLastName = data.user.lastName;
       this.authorIsAdmin = data.user.isAdmin;
 
       this.postTitle = data.title;
       this.postContent = data.content;
+      this.postId = data.id;
+  
       let tempPostCreatedAt = new Date(data.createdAt);
       let options = {year: "numeric", month: "long", day: "numeric"};
       // deliveryDate.toLocaleDateString("fr-FR", options);
