@@ -1,50 +1,107 @@
 <template>
     <div div class="wrapper ps-5">
-        
-        <!-- Post preview (List): Image on the left -->
-        <article class="card card-horizontal card-hover mb-grid-gutter" style="max-width: 52rem;">
-            <!-- <div class="col-md-3"> -->
+        <div v-if="posts">
+            <!-- Post preview (List): Image on the left -->
+            <article class="card card-horizontal card-hover mb-grid-gutter" style="max-width: 52rem;" v-for="post in posts" :key="post.id">
                 <a href="" class="card-img-top" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
-                    <!-- <img src="../../assets/icon.png" class="img-fluid rounded-start" alt="image"> -->
                 </a>
-            <!-- </div> -->
-            <!-- <div class="col-md-8"> -->
+                <!-- </div> -->
+                <!-- <div class="col-md-8"> -->
                 <div class="card-body">
-                    <!-- <a href="" class="meta-link fs-sm mb-2 text-start">Category</a> -->
                     <h2 class="h4 mb-4 nav-heading text-start">
-                        <a href="">Payments made easy. How new Tech will affect E-Commerce industry ?</a>
+                        <router-link :to="`/post/${post.id}`" class="">{{post.title}}</router-link>
+                        <!-- <a :href="`/post/${post.id}`">{{post.title}}</a> -->
                     </h2>
                     <a href="" class="d-flex meta-link fs-sm align-items-center pt-3">
                         <img class="rounded-circle" src="../../assets/icon.png" width="36" alt="Author's Name">
                         <div class="ps-2 ms-1 mt-n1">
                             by
-                            <span class="fw-semibold ms-1">Author's name</span>
+                            <span class="fw-semibold ms-1">{{post.user.firstName}}&nbsp;{{post.user.lastName}}</span>
                         </div>
                     </a>
                     <div class="mt-6 text-end text-nowrap">
                         <a href="" class="meta-link fs-xs">
                             <i class="bi bi-chat-left"></i>
-                            &nbsp;4
+                                &nbsp;4
                         </a>
                         <span class="meta-divider"></span>
                         <a href="" class="meta-link fs-xs">
                             <i class="bi bi-calendar ms-1"></i>
-                            &nbsp;12 Août
+                                &nbsp;{{formatDate(post.publishedAT)}}
                         </a>
-
                     </div>
-                <!-- </div> -->
+                </div>
+            </article>
+        </div>
+        <div v-else>
+            <div class="alert-warning">
+                <br />
+                    <p>Please click on a Tutorial...</p>
+                <br />
             </div>
-            <!-- <a class="card-img-top" href="#" style="background-image: url(../../assets/icon.png);"></a> -->
-            
-        </article>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'PostsList'
+    name: 'PostsList',
+    data() {
+        return {
+            posts: [],
+            currentPost: null,
+            currentIndex: -1,
+            title: "",
+            postCreatedAt: ""
+        }
+    },
+    methods: {
+        retrievePosts() {
+            console.log('Retrieve all Post....');
+
+            fetch("http://localhost:3000/posts//published")
+                .then(async response => {
+                    this.posts = await response.json();
+                    // check for error response
+                    if (!response.ok) {
+                        // get error message from body or default to response statusText
+                        const error = (this.posts && this.posts.message) || response.statusText;
+                        return Promise.reject(error);
+                    }
+
+                    console.log(this.posts);
+                })
+                .catch(e => {
+                    console.error("There was an error on getting all posts !", e);
+                });
+        },
+
+        refreshList() {
+            this.retrievPosts();
+            this.currentPost = null;
+            this.currentIndex = -1;
+        },
+
+        setActivePost(post, index) {
+            this.currentPost = post;
+            this.currentIndex = index;
+        },
+
+        removeAllTutotials() {
+            console.log('This acion will removed all Post...')
+        },
+        formatDate(date) {
+            let tempPostCreatedAt = new Date(date);
+            let options = {year: "numeric", month: "long", day: "numeric"};
+            let dateFormated = tempPostCreatedAt.toLocaleDateString("fr-FR", options);
+            return dateFormated;
+        }
+    },
+    mounted() {
+        this.retrievePosts();
+    }
 }
+
 </script>
 
 <style scoped>
