@@ -12,14 +12,11 @@
 
           <!-- Content -->
           <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
-            <div class="home">
-              <HelloWorld msg="Groupomania Expression App"/>
+            <div class="home text-start ms-5">
+              <HelloWorld msg="Groupomania Blog" />
             </div>
             <div class="">
               <PostsList />
-            </div>
-            <div class="">
-              <SinglePost />
             </div>
           </div>
         </div>
@@ -34,18 +31,13 @@ import NavBarLight from '@/components/Layout/NavBarLight.vue';
 import SideBar from '@/components/Layout/SideBar.vue';
 import HelloWorld from '@/components/HelloWorld.vue';
 import PostsList from '@/components/Posts/PostsList.vue';
-import SinglePost from '@/components/Posts/SinglePost.vue';
-
 
 export default {
   components: {
     NavBarLight,
     SideBar,
     HelloWorld,
-    PostsList,
-    SinglePost
-    // LastPosts,
-    // TotalPosts
+    PostsList
   }
 }
 </script>
