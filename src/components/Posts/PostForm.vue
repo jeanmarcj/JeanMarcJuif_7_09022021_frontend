@@ -2,7 +2,7 @@
   <div class="card border-0 shadow-lg ms-5">
       <div class="" v-if="currentPost">
         <div class="card-header">
-          <h1 class="text-start">Update Post</h1>
+          <h2 class="text-start">Update Post</h2>
         </div>
 
         <div class="card-body">
@@ -97,7 +97,12 @@
           </nav>
         </div><!-- End card-body -->
 
-        <p>{{ message }}</p>
+        <div class="container" v-if="message">
+          <div class="alert alert-info alert-dismissible" role="alert">
+            <p><strong>{{ message }}</strong></p>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        </div>       
 
       </div><!-- End v-if currentPost -->
 
@@ -200,7 +205,7 @@ export default {
       fetch("http://localhost:3000/posts/" + this.currentPost.id, requestOptions)
         .then(async response => {
           let data = await response.json();
-          this.message = 'The Post was updated successfully !';
+          this.message = 'Post updated !';
           console.log(data);
         })
         .catch(e => {
@@ -385,6 +390,11 @@ export default {
     color: #16c995;
     background-color: #ecfbf7;
     border-color: #d0f4ea;
+  }
+  .alert-info {
+    color: #6a9bf4;
+    background-color: #f3f7fe;
+    border-color: #e1ebfd;
   }
 
 </style>
