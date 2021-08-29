@@ -216,6 +216,7 @@ article {
 .meta-link {
     transition: color .2s ease-in-out;
     color: #797a95;
+    font-size: 0.9rem !important;
     vertical-align: middle;
     text-decoration: none;
 }
