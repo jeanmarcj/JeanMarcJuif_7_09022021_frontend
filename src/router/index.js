@@ -33,9 +33,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogList.vue')
   },
   {
+    // Create a post
+    path: '/post/newpost',
+    name: 'NewBlog',
+    component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogCreate.vue')
+  },
+  {
     // Read a sigle Post
     path: '/post/:id',
-    name: 'PostSingle',
+    name: 'BlogSingle',
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogSingle.vue')
   },
   {
