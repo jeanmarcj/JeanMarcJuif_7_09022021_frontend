@@ -31,6 +31,19 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
+                  <span v-if="isLoggedIn">
+                    <a @click="logout">Logout</a>
+                  </span>
+                  <span v-else>
+                    <router-link to="SignUp" class="dropdown-item">
+                      <i class="bi bi-person-plus"></i>
+                      Register
+                    </router-link>
+                    <router-link to="/" class="dropdown-item">
+                      <i class="bi bi-box-arrow-right"></i>
+                      Login
+                    </router-link>
+                  </span>
                     <router-link to="/account" class="dropdown-item">
                       <i class="bi bi-pen"></i>
                       Edit your profile
@@ -50,10 +63,6 @@
               </ul>
             </li>
           </ul>
-          <!-- <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form> -->
         </div>
       </div>
     </nav>
@@ -63,6 +72,17 @@
 <script>
 export default {
   name: 'NavBarLight',
+  computed: {
+    isLoggedIn: function(){
+      return this.$store.getters.isAuthenticated
+    }
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('LogOut')
+      this.$router.push('/')
+    }
+  },
 }
 </script>
 
