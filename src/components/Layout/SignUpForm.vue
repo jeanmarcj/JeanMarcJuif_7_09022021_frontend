@@ -11,22 +11,22 @@
           </div>
           
           <!-- The form -->
-          <form class="needs-validation" id="signupForm" @submit.prevent="processSignupForm" novalidate>
+          <form class="needs-validation" id="signupForm" @submit.prevent="submit" novalidate>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-person"></i></span>
-              <input type="text" class="form-control" placeholder="First Name" name="firstName" v-model="firstName" />
+              <input type="text" class="form-control" placeholder="First Name" name="firstName" v-model="form.firstName" />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-              <input type="text" class="form-control" placeholder="Last Name" name="lastName" v-model="lastName" />
+              <input type="text" class="form-control" placeholder="Last Name" name="lastName" v-model="form.lastName" />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-              <input type="email" class="form-control" placeholder="Email" name="email" v-model="email" required />
+              <input type="email" class="form-control" placeholder="Email" name="email" v-model="form.email" required />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Password" name="password" v-model="password" required />
+              <input type="password" class="form-control" placeholder="Password" name="password" v-model="form.passwordPlainText" required />
             </div>
             <button class="btn btn-primary d-block w-100" type="submit">
               {{title}}
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: 'SignUpForm',
   props: {
@@ -51,10 +53,19 @@ export default {
   },
   data() {
     return {
+      form: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        passwordPlainText: "",
+        isActive: true,
+        isOnline: true
+      },
       firstName: '',
       lastName: '',
       email: '',
       password: '',
+      passwordPlainText: '',
       error: false,
       success: false,
       errorMessages: {
@@ -64,6 +75,19 @@ export default {
     }
   },
   methods:{
+
+    ...mapActions(["Register"]),
+    async submit() {
+      try {
+        await this.Register(this.form);
+        this.$router.push('/Bloglist');
+        this.success = true;
+      } catch (error) {
+        this.errorMessages.message = error;
+        this.error = true;
+      }
+    },
+
     processSignupForm() {
       // Validate Password
       if (this.password.length < 5) {
