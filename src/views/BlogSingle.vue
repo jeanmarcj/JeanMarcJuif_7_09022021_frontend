@@ -38,6 +38,19 @@ export default {
     SideBar,
     HelloWorld,
     SinglePost
+  },
+  data() {
+    return {
+      componentKey: 0,
+    };
+  },
+  methods: {
+    forceRenderer() {
+      this.componentKey += 1;
+    }
+  },
+  mounted() {
+    // this.forceRenderer();
   }
 }
 
