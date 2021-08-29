@@ -3,8 +3,10 @@
         <div v-if="posts">
             <!-- Post preview (List): Image on the left -->
             <article class="card card-horizontal card-hover mb-grid-gutter" style="max-width: 52rem;" v-for="post in posts" :key="post.id">
-                <a href="" class="card-img-top" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
+                <a :href="`?#/post/${post.id}`" class="card-img-top" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
                 </a>
+                <!-- <router-link :to="`/post/${post.id}`" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
+                </router-link> -->
                 <!-- </div> -->
                 <!-- <div class="col-md-8"> -->
                 <div class="card-body">
@@ -22,7 +24,7 @@
                     <div class="mt-6 text-end text-nowrap">
                         <a href="" class="meta-link fs-xs">
                             <i class="bi bi-chat-left"></i>
-                                &nbsp;4
+                            &nbsp;{{post.comments.length}}
                         </a>
                         <span class="meta-divider"></span>
                         <a href="" class="meta-link fs-xs">
@@ -36,7 +38,7 @@
         <div v-else>
             <div class="alert-warning">
                 <br />
-                    <p>Please click on a Tutorial...</p>
+                    <p>Please click on a Post...</p>
                 <br />
             </div>
         </div>
@@ -44,22 +46,26 @@
 </template>
 
 <script>
+
 export default {
     name: 'PostsList',
+    components: {
+        
+    },
     data() {
         return {
-            posts: [],
+            posts: null,
             currentPost: null,
             currentIndex: -1,
             title: "",
-            postCreatedAt: ""
+            postCreatedAt: "",
         }
     },
     methods: {
         retrievePosts() {
-            console.log('Retrieve all Post....');
+            // console.log('Retrieve all Post....');
 
-            fetch("http://localhost:3000/posts//published")
+            fetch("http://localhost:3000/posts/published")
                 .then(async response => {
                     this.posts = await response.json();
                     // check for error response
@@ -68,8 +74,13 @@ export default {
                         const error = (this.posts && this.posts.message) || response.statusText;
                         return Promise.reject(error);
                     }
-
                     console.log(this.posts);
+                    // console.log(this.posts[2].comments[0].lenght);
+                    // console.log(typeof this.posts[2].comments);
+                    console.log(typeof this.posts[0].comments);
+                    let nbOfComments = Object.keys(this.posts[0].comments).length;
+                    console.log(nbOfComments);
+
                 })
                 .catch(e => {
                     console.error("There was an error on getting all posts !", e);
@@ -90,11 +101,36 @@ export default {
         removeAllTutotials() {
             console.log('This acion will removed all Post...')
         },
+
         formatDate(date) {
             let tempPostCreatedAt = new Date(date);
             let options = {year: "numeric", month: "long", day: "numeric"};
             let dateFormated = tempPostCreatedAt.toLocaleDateString("fr-FR", options);
             return dateFormated;
+        },
+
+        getAllComments(id) {
+            // console.log(id);
+    
+            fetch("http://localhost:3000/comments/published/count/" + id)
+                .then(async response => {
+
+                    this.comments = await response.json();
+                    // check for error response
+                    if (!response.ok) {
+                        // get error message from body or default to response statusText
+                        const error = (this.comments && this.comments.message) || response.statusText;
+                        return Promise.reject(error);
+                    }
+                    // this.totalComments = 0;
+                    console.log(this.comments.totalPublishedComments);
+                    this.totalComments = this.comments.totalPublishedComments;
+                    console.log('Total return ', this.totalComments);
+                    return this.totalComments;
+                })
+                .catch(e => {
+                    console.error("There was an error on getting total comments !", e);
+                });
         }
     },
     mounted() {
