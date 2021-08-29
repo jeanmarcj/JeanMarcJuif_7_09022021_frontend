@@ -15,6 +15,8 @@
             <div class="home text-start ms-5">
               <HelloWorld msg="Groupomania Blog" />
             </div>
+            <router-link to="post/newpost" class="btn btn-primary w-100 display-block mb-5 ps-5">I wish to say something...</router-link>
+            <!-- <a href="" class="btn btn-primary w-100 display-block mb-5">I wish to say something...</a> -->
             <div class="">
               <PostsList />
             </div>
@@ -43,15 +45,29 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @media (min-width: 992px) {
-    .sidebar {
-      position: relative;
-      background-color: #f7f7fc;
-      z-index: 5;
-      height: calc(100vh);
-    }
-  }
+
+@media (min-width: 992px) {
   .sidebar {
-    overflow: hidden;
+    position: relative;
+    background-color: #f7f7fc;
+    z-index: 5;
+    height: calc(100vh);
   }
+}
+
+.sidebar {
+  overflow: hidden;
+}
+
+.btn-primary {
+  background-color: #766df4 !important;
+  border-color: #766df4 !important;
+  box-shadow: unset !important;
+  color: white !important;
+  &:hover {
+    background-color: #5549f1 !important;
+    border-color: #5549f1 !important;
+    color: #fff !important;
+  }
+}
 </style>
