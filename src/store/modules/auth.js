@@ -10,17 +10,20 @@ const getters = {
     StateUser: (state) => state.user,
 };
 const actions = {
+
     async Register({dispatch}, form) {
-        await axios.post('register', form)
-        let UserForm = new FormData()
-        UserForm.append('username', form.username)
-        UserForm.append('password', form.password)
-        await dispatch('LogIn', UserForm)
+        await axios.post('/users/signup', form)
+        await dispatch('LogIn', form)
       },
 
-    async LogIn({commit}, user) {
-        await axios.post("login", user);
-        await commit("setUser", user.get("username"));
+    async LogIn({commit}, User) {
+        // console.log(User);
+        const res = await axios.post("/users/login", User);
+        // console.log('res : ', res);
+        const userData = res.data;
+        // console.log(userData);
+        // await commit("setUser", User.get("firstName"));
+        await commit("setUser", userData);
     },
 
     async CreatePost({ dispatch }, post) {
@@ -39,8 +42,8 @@ const actions = {
     },
 };
 const mutations = {
-    setUser(state, username) {
-        state.user = username;
+    setUser(state, userData) {
+        state.user = userData;
       },
     
       setPosts(state, posts) {
