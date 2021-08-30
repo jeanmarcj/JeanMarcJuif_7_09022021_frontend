@@ -22,10 +22,14 @@
                         </div>
                     </a>
                     <div class="mt-6 text-end text-nowrap">
-                        <a href="" class="meta-link fs-xs">
+                        <router-link :to="`/post/${post.id}`" class="meta-link fs-xs">
                             <i class="bi bi-chat-left"></i>
                             &nbsp;{{post.comments.length}}
-                        </a>
+                        </router-link>
+                        <!-- <a href="" class="meta-link fs-xs">
+                            <i class="bi bi-chat-left"></i>
+                            &nbsp;{{post.comments.length}}
+                        </a> -->
                         <span class="meta-divider"></span>
                         <a href="" class="meta-link fs-xs">
                             <i class="bi bi-calendar ms-1"></i>
