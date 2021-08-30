@@ -27,12 +27,15 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person fs-xl"></i>
-                Account
+                {{$store.state.auth.user.firstName}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <span v-if="isLoggedIn">
-                    <a @click="logout">Logout</a>
+                    <router-link to="/" @click="logout" class="dropdown-item text-danger">
+                      <i class="bi bi-box-arrow-left"></i>
+                      Log Out
+                    </router-link>
                   </span>
                   <span v-else>
                     <router-link to="SignUp" class="dropdown-item">
@@ -50,16 +53,36 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/" class="dropdown-item text-danger">
-                      <i class="bi bi-box-arrow-left"></i>
-                      Log out
-                    </router-link>
-                    <!-- <a class="dropdown-item text-danger" href="#">Log out</a> -->
+                  <hr class="dropdown-divider">
                 </li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item disabled" href="#">Admin</a>
-                </li>
+                <div v-if="$store.state.auth.user.isAdmin">
+                    <li>
+                      <a class="dropdown-item" href="#">Admin</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Users</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Posts</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Comments</a>
+                    </li>
+                </div>
+                <div v-else>
+                  <li>
+                    <a class="dropdown-item disabled" href="#">Admin</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item disabled" href="#">Users</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item disabled" href="#">Posts</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item disabled" href="#">Comments</a>
+                  </li>
+                </div><!-- v-else end -->
               </ul>
             </li>
           </ul>
