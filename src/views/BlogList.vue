@@ -15,11 +15,12 @@
             <div class="home text-start ms-5">
               <HelloWorld msg="Groupomania Blog" />
             </div>
-            <router-link to="post/newpost" class="btn btn-primary w-100 display-block mb-5 ps-5">I wish to say something...</router-link>
-            <!-- <a href="" class="btn btn-primary w-100 display-block mb-5">I wish to say something...</a> -->
+            <router-link to="post/newpost" class="btn btn-primary mb-5 ms-5" style="max-width: 52rem;">I wish to say something...</router-link>
+           
             <div class="">
               <PostsList />
             </div>
+
           </div>
         </div>
       </div><!-- End container -->
