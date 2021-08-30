@@ -11,7 +11,8 @@
             </a>
             <div class="ps-2">
               <h6 class="nav-heading mb-1 text-start">
-                <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a>
+                {{authorFirstName}}&nbsp;{{authorLastName}}
+                <!-- <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a> -->
               </h6>
               <div class="text-nowrap d-flex">
                 <div class="meta-link fs-xs">
@@ -24,9 +25,15 @@
                     &nbsp;3
                 </div>
                 <span class="meta-divider"></span>
-                <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="authorIsAdmin" title="Edit this post">
-                  <i class="bi bi-pen-fill text-success"></i>
-                </router-link>
+                <!-- Edit the post if author or admin -->
+                <div class="">
+                    <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="$store.state.auth.user.isAdmin" title="Edit this post">
+                      <i class="bi bi-pen-fill text-success"></i>
+                    </router-link>
+                    <router-link :to="`/blogedit/${postId}`" class="meta-link" v-else-if="isAuthor()" title="Edit this post">
+                      <i class="bi bi-pen-fill text-success"></i>
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -88,6 +95,7 @@ export default {
       authorFirstName: null,
       authorLastName: null,
       authorIsAdmin: false,
+      authorId: null,
       postCreatedAt: null,
       postContent: null,
       postId: null,
@@ -113,9 +121,9 @@ export default {
         fetch("http://localhost:3000/comments/published/" + this.$route.params.id)
           .then(async response => {
             const comments = await response.json();
-            console.log('Comments : ', comments);
+            // console.log('Comments : ', comments);
             this.comments = comments;
-            console.log(typeof this.comments);
+            // console.log(typeof this.comments);
             this.commentsBool = true
             // const totalComments = Object.keys(comments).length;
 
@@ -128,6 +136,7 @@ export default {
         this.authorFirstName = data.user.firstName;
         this.authorLastName = data.user.lastName;
         this.authorIsAdmin = data.user.isAdmin;
+        this.authorId = data.user.id;
 
         this.postTitle = data.title;
         this.postContent = data.content;
@@ -151,6 +160,14 @@ export default {
       let options = {year: "numeric", month: "long", day: "numeric"};
       let dateFormated = tempPostCreatedAt.toLocaleDateString("fr-FR", options);
       return dateFormated;
+    },
+
+    isAuthor() {
+      if (this.$store.state.auth.user.id === this.authorId) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
