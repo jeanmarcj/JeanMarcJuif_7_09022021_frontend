@@ -6,19 +6,19 @@
           <p class="fs-ms text-muted mb-4 text-center">{{textIntro}}</p>
           
           <!-- Error container -->
-          <div class="alert-danger mb-4" v-if="error">
-            <p class="py-3">{{errorMessages.message}}</p>
+          <div class="alert-danger mb-4" v-if="showError" id="error">
+            <p class="py-3">Email ou password is incorrect - {{errorMessages.message}}</p>
           </div>
           
           <!-- The form -->
-          <form class="needs-validation" id="signupForm" @submit.prevent="processSignupForm" novalidate>
+          <form class="needs-validation" id="signupForm" @submit.prevent="submit" novalidate>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-              <input type="email" class="form-control" placeholder="Email" name="email" v-model="email" required />
+              <input type="email" class="form-control" placeholder="Email" name="email" v-model="form.email" required />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Password" name="password" v-model="password" required />
+              <input type="password" class="form-control" placeholder="Password" name="password" v-model="form.password" required />
             </div>
             <button class="btn btn-primary d-block w-100" type="submit">
               {{title}}
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: 'SignUpForm',
   props: {
@@ -43,19 +45,46 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: '',
-      error: false,
-      success: false,
-      errorMessages: {
-        message: ''
-      },
-      data: null
+        form: {
+          email: "",
+          paswword: ""
+        },
+        showError: false,
+
+        // ------- //
+        email: '',
+        password: '',
+        error: false,
+        success: false,
+        errorMessages: {
+          message: ''
+        },
+        data: null
     }
   },
   methods:{
-    processSignupForm() {
 
+    ...mapActions(["LogIn"]),
+    async submit() {
+      const User = {};
+      User.email = this.form.email;
+      User.passwordPlainText = this.form.password;
+
+      // const User = new FormData();
+      // User.append("email", this.form.email);
+      // User.append("passwordPlainText", this.form.password);
+      try {
+        await this.LogIn(User);
+        this.$router.push("Bloglist");
+        this.showError = false;
+      } catch (error) {
+        this.showError = true;
+        this.erorMessages.message = error;
+      }
+    },
+
+    // --------- //
+    processForm() {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
