@@ -1,5 +1,6 @@
 <template>
   <div class="card border-0 shadow-lg ms-5">
+    {{$store.state.auth}}
       <div class="" v-if="currentPost">
         <div class="card-header">
           <h2 class="text-start">Update Post</h2>
@@ -10,12 +11,20 @@
           <!-- Buttons -->
           <div class="mb-3 row">
             <div class="col-md-2"></div>
-            <div class="col-md-10 text-end">
-              <button class="btn btn-outline-danger" title="Delete this Post" @click="deletePost">
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-          </div>
+
+              <div class="col-md-10 text-end">
+                  <div v-if="$store.state.auth.user.isAdmin">
+                      <button class="btn btn-outline-danger" title="Delete this Post" @click="deletePost">
+                          <i class="bi bi-trash"></i>
+                      </button>
+                  </div><!-- v-if -->
+                  <div v-else-if="isAuthor">
+                      <button class="btn btn-outline-danger" title="Delete this Post" @click="deletePost">
+                          <i class="bi bi-trash"></i>
+                      </button>
+                  </div><!-- v-else-if -->
+              </div><!-- col -->
+          </div><!-- row end -->
 
           <form class="needs-validation" id="signupForm" novalidate>
 
@@ -143,6 +152,7 @@ export default {
     this.getPost(this.$route.params.id);
   },
   methods:{
+
     getPost(id) {
       console.log('Get Post... processing... with id:' + id);
       fetch("http://localhost:3000/posts/" + id)
@@ -159,6 +169,14 @@ export default {
       .catch(e => {
         console.error("There was an error !", e);
       });
+    },
+
+    isAuthor() {
+      if (this.$store.state.auth.user.userId === this.authorId) {
+        return true;
+      } else {
+        return false;
+      }
     },
 
     updatePublished(status) {
