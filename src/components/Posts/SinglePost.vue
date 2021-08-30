@@ -11,7 +11,7 @@
             </a>
             <div class="ps-2">
               <h6 class="nav-heading mb-1 text-start">
-                {{authorFirstName}}&nbsp;{{authorLastName}}
+                {{author}}
                 <!-- <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a> -->
               </h6>
               <div class="text-nowrap d-flex">
@@ -22,9 +22,10 @@
                 <span class="meta-divider"></span>
                 <div class="meta-link fs-xs">
                     <i class="bi bi-chat-left"></i>
-                    &nbsp;3
+                    &nbsp;{{nbOfComments}}
                 </div>
                 <span class="meta-divider"></span>
+
                 <!-- Edit the post if author or admin -->
                 <div class="">
                     <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="$store.state.auth.user.isAdmin" title="Edit this post">
@@ -34,6 +35,7 @@
                       <i class="bi bi-pen-fill text-success"></i>
                   </router-link>
                 </div>
+
               </div>
             </div>
           </div>
@@ -52,21 +54,23 @@
     </nav>
 
     <div class="row">
-      <h2 class="h3 pb-4 text-start mb-2 ms-5">{{nbOfComments}} Comments</h2>
-      
-      <!-- Comments -->
-      <div class="comment ms-5" v-for="comment in comments" :key="comment.id">
-        <p class="text-start mb-5 mt-3">{{comment.content}}</p>
-        <div class="d-flex justify-content-end align-items-center">
-          <div class="d-flex align-items-center">
-            <img class="rounded-circle" src="../../assets/icon.png" alt="Author name" width="42">
-            <div class="ps-2 ms-1 text-start">
-              <h4>{{comment.user.firstName}}&nbsp;{{comment.user.lastName}}</h4>
-              <span class="fs-xs text-muted">{{formatDate(comment.createdAt)}}</span>
+      <div v-if="nbOfComments > 0">
+        <h2 class="h3 pb-4 text-start mb-2 ms-5">{{nbOfComments}} Comments</h2>
+        
+        <!-- Comments -->
+        <div class="comment ms-5" v-for="comment in comments" :key="comment.id">
+          <p class="text-start mb-5 mt-3">{{comment.content}}</p>
+          <div class="d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center">
+              <img class="rounded-circle" src="../../assets/icon.png" alt="Author name" width="42">
+              <div class="ps-2 ms-1 text-start">
+                <h4>{{comment.user.firstName}}&nbsp;{{comment.user.lastName}}</h4>
+                <span class="fs-xs text-muted">{{formatDate(comment.createdAt)}}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </div><!-- v-if end -->
       
       <a class="btn btn-primary d-block w-100 ms-5 mt-5" href="#comment-form" data-bs-toggle="collapse">Join the conversation</a>
 
@@ -92,8 +96,7 @@ export default {
   data() {
     return {
       postTitle: null,
-      authorFirstName: null,
-      authorLastName: null,
+      author: null,
       authorIsAdmin: false,
       authorId: null,
       postCreatedAt: null,
@@ -109,7 +112,6 @@ export default {
     fetch("http://localhost:3000/posts/" + this.$route.params.id)
       .then(async response => {
         const data = await response.json();
-
         // check for error response
         if (!response.ok) {
           // get error message from body or default to response statusText
@@ -133,8 +135,7 @@ export default {
           })
 
         // console.log(data);
-        this.authorFirstName = data.user.firstName;
-        this.authorLastName = data.user.lastName;
+        this.author = data.user.firstName + ' ' + data.user.lastName;
         this.authorIsAdmin = data.user.isAdmin;
         this.authorId = data.user.id;
 
@@ -163,7 +164,7 @@ export default {
     },
 
     isAuthor() {
-      if (this.$store.state.auth.user.id === this.authorId) {
+      if (this.$store.state.auth.user.userId === this.authorId) {
         return true;
       } else {
         return false;
