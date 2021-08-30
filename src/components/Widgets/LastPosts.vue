@@ -7,7 +7,8 @@
           </a>
           <div class="ps-2 ms-1">
             <h4 class="fs-md nav-heading mb-1 text-start">
-              <a class="fw-medium" href="#">{{post.title}}</a>
+                <router-link :to="`/post/${post.id}`" class="fw-medium">{{post.title}}</router-link>
+                <!-- <a class="fw-medium" :href="`post/${post.id}`">{{post.title}}</a> -->
             </h4>
             <p class="fs-xs text-muted mb-0 text-start">by {{post.user.firstName}}&nbsp;{{post.user.lastName}}</p>
           </div>
