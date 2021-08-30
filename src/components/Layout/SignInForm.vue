@@ -7,7 +7,7 @@
           
           <!-- Error container -->
           <div class="alert-danger mb-4" v-if="showError" id="error">
-            <p class="py-3">Email ou password is incorrect - {{errorMessages.message}}</p>
+            <p class="py-3">Email ou password is incorrect - {{message}}</p>
           </div>
           
           <!-- The form -->
@@ -56,9 +56,7 @@ export default {
         password: '',
         error: false,
         success: false,
-        errorMessages: {
-          message: ''
-        },
+        message: '',
         data: null
     }
   },
@@ -79,7 +77,7 @@ export default {
         this.showError = false;
       } catch (error) {
         this.showError = true;
-        this.erorMessages.message = error;
+        this.message = error;
       }
     },
 
