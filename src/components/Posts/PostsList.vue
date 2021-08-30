@@ -12,29 +12,24 @@
                 <div class="card-body">
                     <h2 class="h4 mb-4 nav-heading text-start">
                         <router-link :to="`/post/${post.id}`" class="">{{post.title}}</router-link>
-                        <!-- <a :href="`/post/${post.id}`">{{post.title}}</a> -->
                     </h2>
-                    <a href="" class="d-flex meta-link fs-sm align-items-center pt-3">
+                    <router-link to="Account" class="d-flex meta-link fs-sm align-items-center pt-3">
                         <img class="rounded-circle" src="../../assets/icon.png" width="36" alt="Author's Name">
                         <div class="ps-2 ms-1 mt-n1">
                             by
                             <span class="fw-semibold ms-1">{{post.user.firstName}}&nbsp;{{post.user.lastName}}</span>
                         </div>
-                    </a>
+                    </router-link>
                     <div class="mt-6 text-end text-nowrap">
                         <router-link :to="`/post/${post.id}`" class="meta-link fs-xs">
                             <i class="bi bi-chat-left"></i>
                             &nbsp;{{post.comments.length}}
                         </router-link>
-                        <!-- <a href="" class="meta-link fs-xs">
-                            <i class="bi bi-chat-left"></i>
-                            &nbsp;{{post.comments.length}}
-                        </a> -->
                         <span class="meta-divider"></span>
-                        <a href="" class="meta-link fs-xs">
+                        <span class="meta-link fs-xs">
                             <i class="bi bi-calendar ms-1"></i>
                                 &nbsp;{{formatDate(post.publishedAT)}}
-                        </a>
+                        </span>
                     </div>
                 </div>
             </article>
