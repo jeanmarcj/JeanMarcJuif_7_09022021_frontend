@@ -57,16 +57,6 @@
               </div>
             </div> -->
 
-            <!-- User Id -->
-            <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="user-id">
-                User Id<sup class="text-danger">*</sup>
-              </label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" id="user-id" placeholder="UserId" v-model="userId" required>
-                </div>
-            </div>
-
             <!-- Buttons -->
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
@@ -123,11 +113,14 @@ export default {
 
     savePost() {
       // console.log('Update post processing...');
+      // console.log(this.$store);
+      // console.log(this.$store.state.auth.user.userId);
+
         const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: this.userId,
+          userId: this.$store.state.auth.user.userId,
           title: this.title,
           media: this.media,
           content: this.content,
