@@ -26,16 +26,22 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person fs-xl"></i>
-                {{$store.state.auth.user.firstName}}
+                
+                <span v-if="$store.state.auth.user">
+                  <i class="bi bi-person fs-xl"></i>
+                  {{$store.state.auth.user.firstName}}
+                </span>
+                <span v-else>
+
+                </span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <span v-if="isLoggedIn">
-                    <router-link to="/" @click="logout" class="dropdown-item text-danger">
+                    <a @click="logout" class="dropdown-item text-danger">
                       <i class="bi bi-box-arrow-left"></i>
-                      Log Out
-                    </router-link>
+                      Logout
+                      </a>
                   </span>
                   <span v-else>
                     <router-link to="SignUp" class="dropdown-item">
@@ -55,35 +61,22 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <div v-if="$store.state.auth.user.isAdmin">
-                    <li>
-                      <a class="dropdown-item" href="#">Admin</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Users</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Posts</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Comments</a>
-                    </li>
+                <div v-if="$store.state.auth.user">
+                  <div v-if="$store.state.auth.user.isAdmin">
+                      <li><a class="dropdown-item" href="#">Admin</a></li>
+                      <li><a class="dropdown-item" href="#">Users</a></li>
+                      <li><a class="dropdown-item" href="#">Posts</a></li>
+                      <li><a class="dropdown-item" href="#">Comments</a></li>
+                  </div>
+                  <div v-else>
+                      <li><a class="dropdown-item disabled" href="#">Admin</a></li>
+                      <li><a class="dropdown-item disabled" href="#">Users</a></li>
+                      <li><a class="dropdown-item disabled" href="#">Posts</a></li>
+                      <li><a class="dropdown-item disabled" href="#">Comments</a></li>
+                  </div><!-- v-else end -->
                 </div>
-                <div v-else>
-                  <li>
-                    <a class="dropdown-item disabled" href="#">Admin</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item disabled" href="#">Users</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item disabled" href="#">Posts</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item disabled" href="#">Comments</a>
-                  </li>
-                </div><!-- v-else end -->
-              </ul>
+                <div v-else></div>
+              </ul><!-- dropdown menu -->
             </li>
           </ul>
         </div>
@@ -111,7 +104,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+a {
+  cursor: pointer;
+}
 .navbar-light {
     background-color: rgba(255,255,255,1) !important;
 }
