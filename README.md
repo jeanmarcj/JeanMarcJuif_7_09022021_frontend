@@ -34,7 +34,19 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ============================================================================
+Functionnalités :
+Un administrateur peut :
+    Modifier tous les Posts
+    
+Un utilisateur peut :
+    Créer un Post
+    Créer un commentaire
+    Modifier uniquement sont Post
+
+
+
 TODO:
+Dans la vue single post -> le lien sur le nom de l'utilisateur ne fonctionne pas.
 Lorsqu'un post est modifé pour sa publication, mettre à jour le champ publishedAT.
 
 Routes dynamiques :
