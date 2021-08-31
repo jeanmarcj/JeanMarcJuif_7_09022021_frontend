@@ -1,53 +1,18 @@
 <template>
       <div class="collapse ms-5" id="comment-form">
         <form action="" class="needs-validation bg-light shadow p-4 p-lg-5 mt-4">
-            
-            <div class="row">
-                <div class="col-sm-6 mb-6">
-                    <label for="com-name" class="form-label">
-                    Your name
-                    </label>
-                    <sup class="text-danger ms-1">*</sup>
-                    <input class="form-control" type="text" id="com-name" placeholder="Enter your name" required="" v-model="userName">
-                    <div class="invalid-feedback">Please enter your name.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label class="form-label" for="com-email">Email address<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="email" id="com-email" placeholder="Enter your email" required="" v-model="emailAddress">
-                    <div class="invalid-feedback">Please provide a vild email address.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                </div>
-            </div><!-- Row -->
-
+            <div v-if="message">
+              <p class="text-danger">{{message}}</p>
+            </div>
             <div class="row">
                 <div class="mb-3">
-                    <label class="form-label" for="com-text">Comment<sup class="text-danger ms-1">*</sup></label>
+                    <label class="form-label" for="com-text">Your Comment<sup class="text-danger ms-1">*</sup></label>
                     <textarea class="form-control" id="com-text" rows="6" placeholder="Write your comment here" required="" v-model="content"></textarea>
                     <div class="invalid-feedback">Please write your comment.</div>
                     <div class="valid-feedback">Looks good!</div>
                 </div>
-            </div><!-- Row -->
-            
-            <div class="row">
-                <div class="col-sm-6 mb-6">
-                    <label for="com-userId" class="form-label">
-                    userId
-                    </label>
-                    <sup class="text-danger ms-1">*</sup>
-                    <input class="form-control" type="number" id="com-userId" placeholder="userId" required="" v-model="userId">
-                    <div class="invalid-feedback">Please enter the userId.</div>
-                    <div class="valid-feedback">Looks good!</div>
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label class="form-label" for="com-postId">PostId<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="number" id="com-postId" placeholder="Enter the postId" required="" v-model="postId">
-                    <div class="invalid-feedback">Please enter the postId</div>
-                    <div class="valid-feedback">Looks good!</div>
-                </div>
-            </div><!-- Row -->
+            </div>
+            <!-- Row -->
 
             <button class="btn btn-primary" type="submit" @click="saveComment">Post comment</button>
         </form>
@@ -66,8 +31,8 @@ export default {
         emailAddress: '',
         content: '',
         published: true,
-        userId: 0,
-        postId: 0,
+        userId: this.$store.state.auth.user.userId,
+        postId: this.$route.params.id,
         message: ''
     };
   },
@@ -78,6 +43,10 @@ export default {
 
     saveComment() {
       // console.log('Update post processing...');
+      if (this.content === '') {
+        this.message = 'Your comment is empty...';
+        return
+      }
         const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
