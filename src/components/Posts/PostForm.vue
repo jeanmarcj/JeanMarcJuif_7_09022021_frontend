@@ -1,6 +1,6 @@
 <template>
   <div class="card border-0 shadow-lg ms-5">
-    {{$store.state.auth}}
+    
       <div class="" v-if="currentPost">
         <div class="card-header">
           <h2 class="text-start">Update Post</h2>
@@ -77,14 +77,14 @@
             </div>
 
             <!-- User Id -->
-            <div class="mb-3 row align-items-center">
+            <!-- <div class="mb-3 row align-items-center">
               <label class="col-md-2 col-form-label text-start" for="user-id">
                 User Id<sup class="text-danger">*</sup>
               </label>
                 <div class="col-md-10">
                   <input class="form-control" type="text" id="user-id" placeholder="UserId" v-model="currentPost.userId" required>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Buttons -->
             <div class="mb-3 row">
