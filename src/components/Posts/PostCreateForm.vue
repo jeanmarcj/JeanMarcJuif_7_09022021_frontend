@@ -1,6 +1,6 @@
 <template>
   <div class="card border-0 shadow-lg ms-5">
-      <div class="">
+      <div class="wrapper">
         <div class="card-header">
           <h1 class="text-start">Create Post</h1>
         </div>
@@ -25,13 +25,42 @@
                 </div>
             </div>
 
+            <!-- Progress bar for upload files -->
+            <div class="row mb-3">
+              <div class="col-md-2"></div>
+              <div class="col-md-10">
+                <div class="progress">
+                  <div
+                    class="progress-bar bg-info progress-bar-stripped progress-bar-animated"
+                    role="progressbar"
+                    :aria-valuenow="progress"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    :style="{ width: progress + '%' }"
+                    >
+                      {{ progress }}%
+                  </div>
+                </div>
+              </div>  
+            </div>
+
             <!-- File input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="file-input">File<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="file-input">File</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="file" id="file-input" required>
+                  <input class="form-control" type="file" ref="file" id="file-input" @change="selectFile" />
                 </div>
             </div>
+
+            <!-- Buttons upload-->
+            <!-- <div class="mb-3 row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <button class="btn btn-success w-100" :disabled="!selectedFiles" @click="upload">
+                      Upload
+                    </button>
+                </div>
+            </div> -->
 
             <!-- Slug input unique -->
             <div class="mb-3 row align-items-center">
@@ -61,7 +90,7 @@
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <button class="btn btn-success" type="submit" @click="savePost">
+                    <button class="btn btn-success w-100" type="submit" @click="savePost" :disabled="!title || !content || !slug">
                       Save
                     </button>
                 </div>
@@ -82,14 +111,25 @@
             <p><strong>{{ message }}</strong></p>
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
-        </div>       
+        </div>
 
-      </div>
+        <!-- <div class="row mb-3 ms-1 text-start">
+          <p class="">List of Files</p>
+          <ul class="list-group">
+            <li class="list-group-item" v-for="(file, index) in filesInfos" :key="index">
+              <a :href="file.url">{{ file.name }}</a>
+            </li>
+          </ul>
+        </div> -->
+
+      </div><!-- wrapper -->
       
-  </div>
+  </div><!-- card -->
 </template>
 
 <script>
+import UploadService from "../../services/UploadFilesService";
+
 export default {
   name: 'PostCreateForm',
   props: {
@@ -104,15 +144,83 @@ export default {
       slug: '',
       userId: 0,
       published: true,
+      selectedFiles: undefined,
+      currentFile: undefined,
+      progress: 0,
+      filesInfos: [],
+      files: []
     };
   },
   mounted() {
+    // UploadService.getFiles()
+    //   .then(response => {
+    //     this.fileInfos = response.data;
+    //   });
 
+      fetch('http://localhost:3000/files/files')
+        .then( async response => {
+            const data = await response.json();
+            this.filesInfos = data;
+        });
   },
   methods:{
 
+    selectFile() {
+      // console.log(this.$refs.file.files);
+      this.selectedFiles = this.$refs.file.files;
+      // console.log(this.selectedFiles);
+    },
+
+    upload() {
+      this.progress = 0;
+      this.currentFile = this.selectedFiles.item(0);
+
+      UploadService.upload(this.currentFile, event => {
+        this.progress = Math.round((100 * event.loaded) / event.total);
+      })
+        .then(response => {
+          this.message = response.data.message;
+          // return UploadService.getFiles();
+          fetch('http://localhost:3000/files/files')
+            .then( async response => {
+              const data = await response.json();
+              // this.filesInfos = data;
+              return data;
+            });
+        })
+        .then(files => {
+          // Array {name, url}
+          console.log('Coucou from then(files)');
+          this.fileInfos = files;
+          
+          console.log(this.fileInfos);
+          
+        })
+        .catch((e) => {
+          this.progress = 0;
+          this.message = "Could not upload the file!" + e;
+          this.currentFile = undefined;
+        });
+      
+      this.selectedFiles = undefined;
+
+    },
+
     savePost() {
-      // console.log('Update post processing...');
+      console.log('Update post processing...');
+      
+      this.upload();
+
+      fetch('http://localhost:3000/files/files')
+        .then( async response => {
+            const data = await response.json();
+            this.filesInfos = data;
+            });
+
+
+      let totalElts = this.filesInfos.length;
+      let currentImgUrl = this.filesInfos[totalElts - 1].url;
+
       // console.log(this.$store);
       // console.log(this.$store.state.auth.user.userId);
 
@@ -122,12 +230,14 @@ export default {
         body: JSON.stringify({
           userId: this.$store.state.auth.user.userId,
           title: this.title,
-          media: this.media,
+          media: currentImgUrl,
           content: this.content,
           slug: this.slug,
           published: this.published,
           })
       };
+
+      // console.log(requestOptions);
 
       fetch("http://localhost:3000/posts/", requestOptions)
         .then(async response => {
@@ -135,13 +245,13 @@ export default {
           this.message = 'Post created !';
           console.log(data);
           // this.$router.push("Bloglist");
-          this.$router.push({ name: 'Bloglist', params: { id: data.id } })
+          this.$router.push({ name: 'Bloglist' });
         })
         .catch(e => {
           console.error("Error while created the post !", e);
           this.message = "Error while created the post !";
         });
-    },
+    }
   }
 }
 </script>
