@@ -47,6 +47,12 @@
       {{postContent}}
     </div>
 
+    <!-- Post img -->
+    <div class="row mt-5 ms-5">
+      
+      <img :src="postMediaLink" class="img-fluid" alt="image">
+    </div>
+
     <nav class="row mb-3">
       <div class="col-md-12 text-end mt-5">
         <router-link to="/bloglist" class="">Back to Blogs List</router-link>
@@ -102,6 +108,7 @@ export default {
       postCreatedAt: null,
       postContent: null,
       postId: null,
+      postMediaLink: null,
       comments: null,
       commentsBool: false,
       nbOfComments: 0,
@@ -138,10 +145,12 @@ export default {
         this.author = data.user.firstName + ' ' + data.user.lastName;
         this.authorIsAdmin = data.user.isAdmin;
         this.authorId = data.user.id;
+        
 
         this.postTitle = data.title;
         this.postContent = data.content;
         this.postId = data.id;
+        this.postMediaLink = data.media;
     
         let tempPostCreatedAt = new Date(data.createdAt);
         let options = {year: "numeric", month: "long", day: "numeric"};
