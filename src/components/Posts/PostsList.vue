@@ -3,7 +3,7 @@
         <div v-if="posts">
             <!-- Post preview (List): Image on the left -->
             <article class="card card-horizontal card-hover mb-grid-gutter" style="max-width: 52rem;" v-for="post in posts" :key="post.id">
-                <a :href="`?#/post/${post.id}`" class="card-img-top" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
+                <a :href="`?#/post/${post.id}`" class="card-img-top" :style="{ backgroundImage: `url(${post.media})`}">
                 </a>
                 <!-- <router-link :to="`/post/${post.id}`" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
                 </router-link> -->
@@ -73,12 +73,12 @@ export default {
                         const error = (this.posts && this.posts.message) || response.statusText;
                         return Promise.reject(error);
                     }
-                    console.log(this.posts);
+                    // console.log(this.posts);
                     // console.log(this.posts[2].comments[0].lenght);
                     // console.log(typeof this.posts[2].comments);
-                    console.log(typeof this.posts[0].comments);
-                    let nbOfComments = Object.keys(this.posts[0].comments).length;
-                    console.log(nbOfComments);
+                    // console.log(typeof this.posts[0].comments);
+                    // let nbOfComments = Object.keys(this.posts[0].comments).length;
+                    // console.log(nbOfComments);
 
                 })
                 .catch(e => {
