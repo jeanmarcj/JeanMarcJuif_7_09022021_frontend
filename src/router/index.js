@@ -17,7 +17,6 @@ const routes = [
     path: '/about',
     name: 'About',
     meta: {
-      layout: "no-sidebar",
       guest: true
     },
     // route level code-splitting
