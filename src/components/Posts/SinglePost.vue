@@ -59,8 +59,8 @@
         
         <!-- Comments -->
         <div class="comment ms-5" v-for="comment in comments" :key="comment.id">
-          <p class="text-start mb-5 mt-3">{{comment.content}}</p>
-          <div class="d-flex justify-content-end align-items-center">
+          <p class="text-start mb-3 pt-5 ms-5">{{comment.content}}</p>
+          <div class="d-flex justify-content-end align-items-center me-3">
             <div class="d-flex align-items-center">
               <img class="rounded-circle" src="../../assets/icon.png" alt="Author name" width="42">
               <div class="ps-2 ms-1 text-start">
