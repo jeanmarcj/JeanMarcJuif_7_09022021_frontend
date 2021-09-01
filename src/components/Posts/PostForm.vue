@@ -13,7 +13,7 @@
             <div class="col-md-2"></div>
 
               <div class="col-md-10 text-end">
-                  <div v-if="$store.state.auth.user.isAdmin">
+                  <div v-if="$store.state.auth.user.isAdmin || isAuthor()">
                       <button class="btn btn-outline-danger" title="Effacer ce message" @click="deletePost">
                           <i class="bi bi-trash"></i>
                       </button>
@@ -26,11 +26,11 @@
               </div><!-- col -->
           </div><!-- row end -->
 
-          <form class="needs-validation" id="signupForm" novalidate>
-
+          <form @submit.prevent="updatePost" class="needs-validation" id="updatePost" novalidate>
+              
             <!-- Title input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="title-input">Titre<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="title-input">Titre</label>
                 <div class="col-md-10">
                   <input class="form-control" type="text" id="title-input" placeholder="Title" v-model="currentPost.title" required>
                 </div>
@@ -38,23 +38,23 @@
 
             <!-- Content input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="content-input">Contenu<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="content-input">Contenu</label>
                 <div class="col-md-10">
                   <textarea class="form-control" id="content-input" rows="5" v-model="currentPost.content" required></textarea>
                 </div>
             </div>
 
             <!-- File input -->
-            <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="file-input">Fichier<sup class="text-danger">*</sup></label>
+            <!-- <div class="mb-3 row align-items-center">
+              <label class="col-md-2 col-form-label text-start" for="file-input">Fichier</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="file" id="file-input" required>
+                  <input class="form-control" type="file" id="file-input" disabled>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Slug input unique -->
+            <!-- Slug -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="slug-input">Slug<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="slug-input">Slug</label>
                 <div class="col-md-10">
                   <input class="form-control" type="text" id="slug-input" placeholder="Slug" v-model="currentPost.slug" required>
                 </div>
@@ -90,7 +90,7 @@
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <button class="btn btn-success w-100 my-5" type="submit" @click="updatePost">
+                    <button class="btn btn-success w-100 my-5" type="submit">
                       Modifier ce message
                     </button>
                 </div>
@@ -101,7 +101,7 @@
           <nav class="row mb-3">
             <div class="col-md-2"></div>
             <div class="col-md-10 text-end">
-              <router-link to="/bloglist" class="">Tous les messages</router-link>
+              <router-link :to="`/post/${currentPost.id}`" class="text-danger">Annuler</router-link>
             </div>
           </nav>
         </div><!-- End card-body -->
@@ -164,7 +164,7 @@ export default {
           const error = (this.currentPost && this.currentPost.message) || response.statusText;
           return Promise.reject(error);
         }
-        console.log(this.currentPost);
+        // console.log(this.currentPost);
       })
       .catch(e => {
         console.error("Une erreur est intervenue ! Erreur : ", e);
@@ -174,9 +174,8 @@ export default {
     isAuthor() {
       if (this.$store.state.auth.user.userId === this.authorId) {
         return true;
-      } else {
-        return false;
       }
+        return false;
     },
 
     updatePublished(status) {
@@ -207,13 +206,13 @@ export default {
     },
 
     updatePost() {
-      // console.log('Update post processing...');
+      // console.log('Update post processing...') + this.currentPost.id;
         const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: this.currentPost.title,
-          media: this.currentPost.media,
+          // media: this.currentPost.media,
           content: this.currentPost.content,
           slug: this.currentPost.slug,
           published: this.currentPost.published,
@@ -223,8 +222,11 @@ export default {
       fetch("http://localhost:3000/posts/" + this.currentPost.id, requestOptions)
         .then(async response => {
           let data = await response.json();
-          this.message = 'Post updated !';
           console.log(data);
+          this.message = 'Message mis à jour !';
+
+          this.$router.push({ name: 'BlogSingle', params: { id: this.currentPost.id } })
+
         })
         .catch(e => {
           console.error("Une erreur est intervenue ! Erreur : ", e);
@@ -233,6 +235,13 @@ export default {
 
     deletePost() {
       // console.log('Delete method activated !');
+
+      let confirm = window.confirm("Etes-vous sûr de vouloir effacer ce message ?")
+
+      if (!confirm) {
+        return
+      }
+
       const requestOptions = {
         method: 'DELETE'
       }
@@ -241,7 +250,7 @@ export default {
       .then(async response => {
         let data = await response.json();
         console.log(data);
-        this.$router.push({ name: "Bloglist"});
+        this.$router.push({ name: "bloglist"});
       })
       .catch(e => {
         console.error("Une erreur est intervenue lors de la suppression ! Erreur : ", e);

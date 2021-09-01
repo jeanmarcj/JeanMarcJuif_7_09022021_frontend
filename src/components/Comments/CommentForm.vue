@@ -6,10 +6,10 @@
             </div>
             <div class="row">
                 <div class="mb-3">
-                    <label class="form-label" for="com-text">Your Comment<sup class="text-danger ms-1">*</sup></label>
-                    <textarea class="form-control" id="com-text" rows="6" placeholder="Write your comment here" required="" v-model="content"></textarea>
-                    <div class="invalid-feedback">Please write your comment.</div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <label class="form-label" for="com-text">Votre commentaire<sup class="text-danger ms-1">*</sup></label>
+                    <textarea class="form-control" id="com-text" rows="6" placeholder="Message..." required="" v-model="content"></textarea>
+                    <div class="invalid-feedback">Ecrivez votre commentaire.</div>
+                    <div class="valid-feedback">Ok!</div>
                 </div>
             </div>
             <!-- Row -->
@@ -44,7 +44,7 @@ export default {
     saveComment() {
       // console.log('Update post processing...');
       if (this.content === '') {
-        this.message = 'Your comment is empty...';
+        this.message = 'Merci de saisir un commentaire ...';
         return
       }
         const requestOptions = {
@@ -58,12 +58,12 @@ export default {
           })
       };
 
-      console.log(requestOptions);
+      // console.log(requestOptions);
 
       fetch("http://localhost:3000/comments/", requestOptions)
         .then(async response => {
             let data = await response.json();
-            this.message = 'Comment created !';
+            this.message = 'Commentaire créé !';
             console.log(data);
             
             // Reload the page
@@ -72,8 +72,8 @@ export default {
 
         })
         .catch(e => {
-          console.error("Error while created the comment !", e);
-          this.message = "Error while created the comment !";
+          console.error("Une erreur est intervenue lors de la création du commentaire !", e);
+          this.message = "Une erreur est intervenue lors de la création du commentaire !";
         });
     }
   }

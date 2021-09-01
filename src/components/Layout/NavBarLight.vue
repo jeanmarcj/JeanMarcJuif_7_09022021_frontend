@@ -17,7 +17,7 @@
                   <i class="bi bi-info"></i>
                   About
               </a> -->
-              <router-link to="/about" class="nav-link">
+              <router-link :to="{ name: 'About'}" class="nav-link">
                 <i class="bi bi-info"></i>
                 Les règles de notre messagerie
               </router-link>
@@ -65,7 +65,7 @@
                 <div v-if="$store.state.auth.user">
                   <div v-if="$store.state.auth.user.isAdmin">
                       <li><hr class="dropdown-divider"></li>
-                      <li class="dropdown-item disabled"><stong>Administration</stong></li>
+                      <li class="dropdown-item disabled"><strong>Administration</strong></li>
                       <li><a class="dropdown-item disabled" href="#">Utilisateurs</a></li>
                       <li><a class="dropdown-item disabled" href="#">Messages</a></li>
                       <li><a class="dropdown-item disabled" href="#">Commentaires</a></li>

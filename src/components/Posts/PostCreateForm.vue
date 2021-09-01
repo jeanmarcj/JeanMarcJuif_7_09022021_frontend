@@ -7,7 +7,7 @@
 
         <div class="card-body">
 
-          <form class="needs-validation" id="createPostForm" novalidate>
+          <form class="needs-validation" id="createPostForm" @submit.prevent="savePost" novalidate>
 
             <!-- Title input -->
             <div class="mb-3 row align-items-center">
@@ -90,18 +90,18 @@
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <button class="btn btn-success w-100" type="submit" @click="savePost" :disabled="!title || !content || !slug">
-                      Save
+                    <button class="btn btn-success w-100" type="submit" :disabled="!title || !content || !slug">
+                      Enregistrer
                     </button>
                 </div>
             </div>
 
           </form>
-
+          
           <nav class="row mb-3">
             <div class="col-md-2"></div>
             <div class="col-md-10 text-end">
-              <router-link to="/bloglist" class="">Back to Blogs List</router-link>
+              <router-link to="/bloglist" class="">Tous les messages</router-link>
             </div>
           </nav>
         </div><!-- End card-body -->
@@ -142,7 +142,7 @@ export default {
       media: '',
       content: '',
       slug: '',
-      userId: 0,
+      userId: this.$store.state.auth.user.userId,
       published: true,
       selectedFiles: undefined,
       currentFile: undefined,
@@ -190,7 +190,7 @@ export default {
         })
         .then(files => {
           // Array {name, url}
-          console.log('Coucou from then(files)');
+          // console.log('Coucou from then(files)');
           this.fileInfos = files;
           
           console.log(this.fileInfos);
@@ -208,8 +208,14 @@ export default {
 
     savePost() {
       console.log('Update post processing...');
-      
-      this.upload();
+
+      // Upload the file
+
+      // this.upload();
+
+      // console.log(this.fileInfos);
+
+      // Save in DB
 
       fetch('http://localhost:3000/files/files')
         .then( async response => {
@@ -217,20 +223,24 @@ export default {
             this.filesInfos = data;
             });
 
+      console.log(this.filesInfos);
 
       let totalElts = this.filesInfos.length;
       let currentImgUrl = this.filesInfos[totalElts - 1].url;
-
+      console.log(currentImgUrl);
+      this.media = this.currentImgUrl;
       // console.log(this.$store);
       // console.log(this.$store.state.auth.user.userId);
 
-        const requestOptions = {
+      console.log(this.media);
+
+      const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: this.$store.state.auth.user.userId,
           title: this.title,
-          media: currentImgUrl,
+          media: this.media,
           content: this.content,
           slug: this.slug,
           published: this.published,
@@ -242,14 +252,14 @@ export default {
       fetch("http://localhost:3000/posts/", requestOptions)
         .then(async response => {
           let data = await response.json();
-          this.message = 'Post created !';
-          console.log(data);
+          this.message = 'Message créé !';
+          console.log('Response après push', data);
           // this.$router.push("Bloglist");
-          this.$router.push({ name: 'Bloglist' });
+          this.$router.push({ name: 'bloglist' });
         })
         .catch(e => {
-          console.error("Error while created the post !", e);
-          this.message = "Error while created the post !";
+          console.error("Une erreur est intervenue lors de la création du Post !", e);
+          this.message = "Une erreur est intervenue lors de la création du Post ! !";
         });
     }
   }

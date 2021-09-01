@@ -1,6 +1,8 @@
 <template>
   <div class="pb-4">
+    
     <h1 class="text-start ms-5">{{postTitle}}</h1>
+    
     <!-- Post author -->
     <div class="row position-relative g-0 align-items-center border-top border-bottom mb-4 ms-5">
       <div class="col-md-6 py-3 pe-md-3">
@@ -28,12 +30,10 @@
 
                 <!-- Edit the post if author or admin -->
                 <div class="">
-                    <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="$store.state.auth.user.isAdmin" title="Edit this post">
+                    <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="$store.state.auth.user.isAdmin || isAuthor()" title="Edit this post">
                       <i class="bi bi-pen-fill text-success"></i>
                     </router-link>
-                    <router-link :to="`/blogedit/${postId}`" class="meta-link" v-else-if="isAuthor()" title="Edit this post">
-                      <i class="bi bi-pen-fill text-success"></i>
-                  </router-link>
+
                 </div>
 
               </div>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Post img -->
-    <div class="row mt-5 ms-5">
+    <div class="row mt-5 ms-5" v-if="postMediaLink">
       
       <img :src="postMediaLink" class="img-fluid" alt="image">
     </div>
@@ -65,6 +65,15 @@
         
         <!-- Comments -->
         <div class="comment ms-5" v-for="comment in comments" :key="comment.id">
+         
+            <div class="d-flex justify-content-end">
+                <div v-if="$store.state.auth.user.isAdmin || comment.user.id === $store.state.auth.user.userId" class="mt-2 me-3">
+                    <button class="btn btn-outline-danger btn-sm" title="Effacer ce commentaire" @click="deleteComment(comment.id)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div><!-- v-if -->
+            </div>
+          
           <p class="text-start mb-3 pt-5 ms-5">{{comment.content}}</p>
           <div class="d-flex justify-content-end align-items-center me-3">
             <div class="d-flex align-items-center">
@@ -78,14 +87,22 @@
         </div>
       </div><!-- v-if end -->
       
-      <a class="btn btn-primary d-block w-100 ms-5 mt-5" href="#comment-form" data-bs-toggle="collapse">Ecrire un commentaire</a>
-
-      <!-- Comment Form -->
-      <CommentForm />  
+      
     </div><!-- Row -->
+    <div class="row">
+      <div class="col-md-12">
+        <a class="btn btn-primary w-80 ms-5 mt-5" href="#comment-form" data-bs-toggle="collapse">Ecrire un commentaire</a>
+      </div>
+    </div><!-- Row -->
+    <!-- Comment Form -->
+    <div class="row">
+      <div class="col-md-12">
+        <CommentForm />
+      </div>
+    </div>
     <nav class="row mb-3">
       <div class="col-md-12 text-end mt-5">
-        <router-link to="/bloglist" class="">Tous les messages</router-link>
+        <router-link to="/bloglist">Tous les messages</router-link>
       </div>
     </nav>
   </div>
@@ -145,7 +162,6 @@ export default {
         this.author = data.user.firstName + ' ' + data.user.lastName;
         this.authorIsAdmin = data.user.isAdmin;
         this.authorId = data.user.id;
-        
 
         this.postTitle = data.title;
         this.postContent = data.content;
@@ -175,10 +191,36 @@ export default {
     isAuthor() {
       if (this.$store.state.auth.user.userId === this.authorId) {
         return true;
-      } else {
-        return false;
+        }
+      return false;
+    },
+      
+      deleteComment(id) {
+      // console.log('Delete method activated !');
+      // console.log('Clicked ! with id: ', id);
+
+      let confirm = window.confirm("Etes-vous sûr de vouloir effacer ce commentaire ?")
+
+      if (!confirm) {
+        return
       }
-    }
+
+      const requestOptions = {
+        method: 'DELETE'
+      }
+
+      fetch("http://localhost:3000/comments/" + id, requestOptions)
+      .then(async response => {
+        let data = await response.json();
+        console.log(data);
+        
+        this.$router.go();
+      })
+      .catch(e => {
+        console.error("Une erreur est intervenue lors de la suppression ! Erreur : ", e);
+      })
+
+    },
   }
 };
 </script>
@@ -265,6 +307,14 @@ export default {
     border-color: #5549f1 !important;
     color: #fff !important;
     text-decoration: none !important;
+  }
+}
+.btn-outline-danger {
+  color: #f74f78;
+  // border: 1px solid #f74f78;
+  &:hover {
+    color: #fff;
+    background-color: #f74f78;
   }
 }
 .comment {
