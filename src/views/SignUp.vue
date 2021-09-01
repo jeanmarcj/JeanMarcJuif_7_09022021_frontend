@@ -2,11 +2,11 @@
   <div class="wrapper">
     
     <header>
-      <LogoTitle msg = "Welcome on your expression app" />
+      <LogoTitle msg = "Bienvenue sur notre messagerie" />
     </header>
 
     <section class="container d-flex justify-content-center align-items-center pt-7 pb-4">
-      <SignUpForm title="Sign up" textIntro ="Registration takes less than a minute but gives you full control over your orders."/>
+      <SignUpForm title="Sign up" textIntro ="Enregitrez-vous pour accéder à notre messagerie" />
     </section>
   </div>
   

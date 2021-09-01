@@ -13,10 +13,10 @@
           <!-- Content -->
           <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
             <div class="home text-start ms-5">
-              <HelloWorld msg="Groupomania Blog" />
+              <HelloWorld msg="Groupomania Messagerie" />
             </div>
-            <div class="mb-5 text-center" style="max-width: 40.5rem;">
-              <router-link to="post/newpost" class="btn btn-primary w-100 ms-5">I wish to say something...</router-link>
+            <div class="mb-5" style="max-width: 49rem;">
+              <router-link to="post/newpost" class="btn btn-primary w-100 ms-5">Je souhaite dire quelque chose...</router-link>
            </div>
             <div class="">
               <PostsList />

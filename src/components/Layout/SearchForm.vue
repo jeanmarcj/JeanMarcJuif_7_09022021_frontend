@@ -1,11 +1,11 @@
 <template>
     <div class="widget my-5">      
-      <h3 class="widget-title text-start">Search Blog</h3>
+      <h3 class="widget-title text-start">Recherche dans les messages</h3>
       <div class="input-group">
         <span class="input-group-text">
           <i class="bi bi-search"></i>
         </span>
-        <input class="form-control" type="text" placeholder="Search...">
+        <input class="form-control" type="text" placeholder="Rechercher...">
       </div>
     </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
     <header>
-      <LogoTitle msg = "Welcome on your expression app" />
+      <LogoTitle msg = "Bienvenue sur notre messagerie" />
     </header>
 
     <section class="container d-flex justify-content-center align-items-center pt-7 pb-4" style="flex: 1 0 auto;">
-      <SignInForm title="Sign in" textIntro="Sign in to your account using email and password provided during registration."/> 
+      <SignInForm title="Se connecter" textIntro="Connectez-vous à l'aide de votre email et mot de passe fournis lors de cotre enregistrement."/> 
     </section>
   </div><!-- End Wrapper -->
   

@@ -16,7 +16,7 @@
                     <router-link to="Account" class="d-flex meta-link fs-sm align-items-center pt-3">
                         <img class="rounded-circle" src="../../assets/icon.png" width="36" alt="Author's Name">
                         <div class="ps-2 ms-1 mt-n1">
-                            by
+                            Par
                             <span class="fw-semibold ms-1">{{post.user.firstName}}&nbsp;{{post.user.lastName}}</span>
                         </div>
                     </router-link>
@@ -37,7 +37,7 @@
         <div v-else>
             <div class="alert-warning">
                 <br />
-                    <p>Please click on a Post...</p>
+                    <p>Sélectionner un message...</p>
                 <br />
             </div>
         </div>
@@ -82,7 +82,7 @@ export default {
 
                 })
                 .catch(e => {
-                    console.error("There was an error on getting all posts !", e);
+                    console.error("Impossible d'afficher les messages ! Erreur :", e);
                 });
         },
 
@@ -97,8 +97,8 @@ export default {
             this.currentIndex = index;
         },
 
-        removeAllTutotials() {
-            console.log('This acion will removed all Post...')
+        removeAllPosts() {
+            console.log('Cette action efface tous les messages...')
         },
 
         formatDate(date) {
@@ -108,29 +108,6 @@ export default {
             return dateFormated;
         },
 
-        getAllComments(id) {
-            // console.log(id);
-    
-            fetch("http://localhost:3000/comments/published/count/" + id)
-                .then(async response => {
-
-                    this.comments = await response.json();
-                    // check for error response
-                    if (!response.ok) {
-                        // get error message from body or default to response statusText
-                        const error = (this.comments && this.comments.message) || response.statusText;
-                        return Promise.reject(error);
-                    }
-                    // this.totalComments = 0;
-                    console.log(this.comments.totalPublishedComments);
-                    this.totalComments = this.comments.totalPublishedComments;
-                    console.log('Total return ', this.totalComments);
-                    return this.totalComments;
-                })
-                .catch(e => {
-                    console.error("There was an error on getting total comments !", e);
-                });
-        }
     },
     mounted() {
         this.retrievePosts();

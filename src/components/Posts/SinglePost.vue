@@ -11,7 +11,7 @@
             </a>
             <div class="ps-2">
               <h6 class="nav-heading mb-1 text-start">
-                {{author}}
+                Par {{author}}
                 <!-- <a href="">{{authorFirstName}}&nbsp;{{authorLastName}}</a> -->
               </h6>
               <div class="text-nowrap d-flex">
@@ -55,13 +55,13 @@
 
     <nav class="row mb-3">
       <div class="col-md-12 text-end mt-5">
-        <router-link to="/bloglist" class="">Back to Blogs List</router-link>
+        <router-link to="/bloglist" class="">Tous les messages</router-link>
       </div>
     </nav>
 
     <div class="row">
       <div v-if="nbOfComments > 0">
-        <h2 class="h3 pb-4 text-start mb-2 ms-5">{{nbOfComments}} Comments</h2>
+        <h2 class="h3 pb-4 text-start mb-2 ms-5">{{nbOfComments}} Commentaire(s)</h2>
         
         <!-- Comments -->
         <div class="comment ms-5" v-for="comment in comments" :key="comment.id">
@@ -78,14 +78,14 @@
         </div>
       </div><!-- v-if end -->
       
-      <a class="btn btn-primary d-block w-100 ms-5 mt-5" href="#comment-form" data-bs-toggle="collapse">Join the conversation</a>
+      <a class="btn btn-primary d-block w-100 ms-5 mt-5" href="#comment-form" data-bs-toggle="collapse">Ecrire un commentaire</a>
 
       <!-- Comment Form -->
       <CommentForm />  
     </div><!-- Row -->
     <nav class="row mb-3">
       <div class="col-md-12 text-end mt-5">
-        <router-link to="/bloglist" class="">Back to Blogs List</router-link>
+        <router-link to="/bloglist" class="">Tous les messages</router-link>
       </div>
     </nav>
   </div>

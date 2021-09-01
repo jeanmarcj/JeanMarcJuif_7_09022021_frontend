@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <NavBarLight />
-    <h1>This is an about page</h1>
+    <h1>Règles d'utilisation de l'application</h1>
   </div>
 </template>
 

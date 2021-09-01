@@ -12,8 +12,8 @@
 
           <!-- Content -->
           <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
-            <div class="home">
-              <HelloWorld msg="Groupomania Expression App"/>
+            <div class="home text-start ms-5">
+              <HelloWorld msg="Groupomania Messagerie"/>
             </div>
             <div class="">
               <PostForm />

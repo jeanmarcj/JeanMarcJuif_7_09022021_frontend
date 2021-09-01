@@ -7,7 +7,7 @@
           
           <!-- Error container -->
           <div class="alert-danger mb-4" v-if="showError" id="error">
-            <p class="py-3">Email ou password is incorrect - {{message}}</p>
+            <p class="py-3">Votre Email ou votre mot de passe ne sont pas corrects ! - {{message}}</p>
           </div>
           
           <!-- The form -->
@@ -18,14 +18,14 @@
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Password" name="password" v-model="form.password" required />
+              <input type="password" class="form-control" placeholder="Mot de passe" name="password" v-model="form.password" required />
             </div>
             <button class="btn btn-primary d-block w-100" type="submit">
               {{title}}
             </button>
             <p class="fs-sm pt-3 pb-5 mb-0 text-center">
-              Don't have an account ?
-              <router-link to="/signup" class="fw-medium">Sign up</router-link>
+              Vous n'avez pas encore de compte ?
+              <router-link to="/signup" class="fw-medium">S'enregistrer</router-link>
             </p>
           </form>
           <!-- End form -->

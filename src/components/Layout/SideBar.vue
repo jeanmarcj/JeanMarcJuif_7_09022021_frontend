@@ -6,13 +6,13 @@
         
         <!-- Last 3 Posts -->
         <div class="widget mb-5">
-          <h3 class="widget-title pb-1 text-start">Last posts</h3>
+          <h3 class="widget-title pb-1 text-start">Derniers messages</h3>
           <LastPosts />
         </div>
         <!-- Total active Users -->
         <hr>
         <div class="widget mb-5">
-          <h3 class="widget-title pb-1 text-start">Total Published Post</h3>
+          <h3 class="widget-title pb-1 text-start">Nombre de messages</h3>
           <TotalPosts class="text-info fw-bolder" />
         </div>
       </aside>

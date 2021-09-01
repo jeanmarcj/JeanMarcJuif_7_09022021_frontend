@@ -13,15 +13,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              <!-- <a href="/about" class="nav-link">
+                  <i class="bi bi-info"></i>
+                  About
+              </a> -->
               <router-link to="/about" class="nav-link">
                 <i class="bi bi-info"></i>
-                About
+                Les règles de notre messagerie
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/bloglist" class="nav-link active">
                 <i class="bi bi-newspaper"></i>
-                Blog
+                Messages
               </router-link>
             </li>
             <li class="nav-item dropdown">
@@ -40,40 +44,32 @@
                   <span v-if="isLoggedIn">
                     <a @click="logout" class="dropdown-item text-danger">
                       <i class="bi bi-box-arrow-left"></i>
-                      Logout
+                      Quitter
                       </a>
                   </span>
                   <span v-else>
                     <router-link to="SignUp" class="dropdown-item">
                       <i class="bi bi-person-plus"></i>
-                      Register
+                      S'enregistrer
                     </router-link>
                     <router-link to="/" class="dropdown-item">
                       <i class="bi bi-box-arrow-right"></i>
-                      Login
+                      Se connecter
                     </router-link>
                   </span>
                     <router-link to="/account" class="dropdown-item">
                       <i class="bi bi-pen"></i>
-                      Edit your profile
+                      Votre compte
                     </router-link>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
                 </li>
                 <div v-if="$store.state.auth.user">
                   <div v-if="$store.state.auth.user.isAdmin">
-                      <li><a class="dropdown-item" href="#">Admin</a></li>
-                      <li><a class="dropdown-item" href="#">Users</a></li>
-                      <li><a class="dropdown-item" href="#">Posts</a></li>
-                      <li><a class="dropdown-item" href="#">Comments</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li class="dropdown-item disabled"><stong>Administration</stong></li>
+                      <li><a class="dropdown-item disabled" href="#">Utilisateurs</a></li>
+                      <li><a class="dropdown-item disabled" href="#">Messages</a></li>
+                      <li><a class="dropdown-item disabled" href="#">Commentaires</a></li>
                   </div>
-                  <div v-else>
-                      <li><a class="dropdown-item disabled" href="#">Admin</a></li>
-                      <li><a class="dropdown-item disabled" href="#">Users</a></li>
-                      <li><a class="dropdown-item disabled" href="#">Posts</a></li>
-                      <li><a class="dropdown-item disabled" href="#">Comments</a></li>
-                  </div><!-- v-else end -->
                 </div>
                 <div v-else></div>
               </ul><!-- dropdown menu -->

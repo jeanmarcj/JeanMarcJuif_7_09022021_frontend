@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center h2">
     {{total}}
   </div>
 </template>

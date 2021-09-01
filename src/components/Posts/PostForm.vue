@@ -3,7 +3,7 @@
     
       <div class="" v-if="currentPost">
         <div class="card-header">
-          <h2 class="text-start">Update Post</h2>
+          <h2 class="text-start text-warning">Modifier un message</h2>
         </div>
 
         <div class="card-body">
@@ -14,12 +14,12 @@
 
               <div class="col-md-10 text-end">
                   <div v-if="$store.state.auth.user.isAdmin">
-                      <button class="btn btn-outline-danger" title="Delete this Post" @click="deletePost">
+                      <button class="btn btn-outline-danger" title="Effacer ce message" @click="deletePost">
                           <i class="bi bi-trash"></i>
                       </button>
                   </div><!-- v-if -->
                   <div v-else-if="isAuthor">
-                      <button class="btn btn-outline-danger" title="Delete this Post" @click="deletePost">
+                      <button class="btn btn-outline-danger" title="Effacer ce message" @click="deletePost">
                           <i class="bi bi-trash"></i>
                       </button>
                   </div><!-- v-else-if -->
@@ -30,7 +30,7 @@
 
             <!-- Title input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="title-input">Title<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="title-input">Titre<sup class="text-danger">*</sup></label>
                 <div class="col-md-10">
                   <input class="form-control" type="text" id="title-input" placeholder="Title" v-model="currentPost.title" required>
                 </div>
@@ -38,7 +38,7 @@
 
             <!-- Content input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="content-input">Content<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="content-input">Contenu<sup class="text-danger">*</sup></label>
                 <div class="col-md-10">
                   <textarea class="form-control" id="content-input" rows="5" v-model="currentPost.content" required></textarea>
                 </div>
@@ -46,7 +46,7 @@
 
             <!-- File input -->
             <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="file-input">File<sup class="text-danger">*</sup></label>
+              <label class="col-md-2 col-form-label text-start" for="file-input">Fichier<sup class="text-danger">*</sup></label>
                 <div class="col-md-10">
                   <input class="form-control" type="file" id="file-input" required>
                 </div>
@@ -66,12 +66,12 @@
                 <strong>Status</strong>
               </label>
               <div class="col-md-10 text-start">
-                {{ currentPost.published ? "Published - " : "Pending - " }}
+                {{ currentPost.published ? "Publié - " : "En attente de publication - " }}
                 <button class="btn btn-warning btn-sm me-2" v-if="currentPost.published" @click="updatePublished(false)">
-                  UnPublish
+                  Ne pas publier
                 </button>
                 <button v-else class="btn btn-success btn-sm me-2" @click="updatePublished(true)">
-                  Publish
+                  Publier ce message
                 </button>
               </div>
             </div>
@@ -90,8 +90,8 @@
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <button class="btn btn-success" type="submit" @click="updatePost">
-                      Update this Post
+                    <button class="btn btn-success w-100 my-5" type="submit" @click="updatePost">
+                      Modifier ce message
                     </button>
                 </div>
             </div>
@@ -101,7 +101,7 @@
           <nav class="row mb-3">
             <div class="col-md-2"></div>
             <div class="col-md-10 text-end">
-              <router-link to="/bloglist" class="">Back to Blogs List</router-link>
+              <router-link to="/bloglist" class="">Tous les messages</router-link>
             </div>
           </nav>
         </div><!-- End card-body -->
@@ -167,7 +167,7 @@ export default {
         console.log(this.currentPost);
       })
       .catch(e => {
-        console.error("There was an error !", e);
+        console.error("Une erreur est intervenue ! Erreur : ", e);
       });
     },
 
@@ -202,7 +202,7 @@ export default {
           console.log(data);
         })
         .catch(e => {
-          console.error("Error while updated !", e);
+          console.error("Une erreur est intervenue lors de la mise à jour !", e);
         });
     },
 
@@ -227,7 +227,7 @@ export default {
           console.log(data);
         })
         .catch(e => {
-          console.error("Error while updated !", e);
+          console.error("Une erreur est intervenue ! Erreur : ", e);
         });
     },
 
@@ -244,7 +244,7 @@ export default {
         this.$router.push({ name: "Bloglist"});
       })
       .catch(e => {
-        console.error("Error while deleting !", e);
+        console.error("Une erreur est intervenue lors de la suppression ! Erreur : ", e);
       })
 
     },
@@ -288,11 +288,11 @@ export default {
           this.$router.push("Bloglist");
         })
         .catch(error => {
-          this.errorMessage.message = 'There was an error : ' + error;
+          this.errorMessage.message = 'Une ereur est intervenue : ' + error;
           this.error = true;
           this.success = false;
           // console.log(this.error);
-          console.error('There was an error !', error);
+          console.error('Une ereur est intervenue !', error);
         });
     }
   }
@@ -413,6 +413,9 @@ export default {
     color: #6a9bf4;
     background-color: #f3f7fe;
     border-color: #e1ebfd;
+  }
+  .text-warning {
+    color: #ffb15c !important;
   }
 
 </style>

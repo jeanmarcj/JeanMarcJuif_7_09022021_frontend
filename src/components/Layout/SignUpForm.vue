@@ -11,14 +11,14 @@
           </div>
           
           <!-- The form -->
-          <form class="needs-validation" id="signupForm" @submit.prevent="submit" novalidate>
+          <form class="needs-validation" id="signupForm" @submit.prevent="submit">
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-person"></i></span>
-              <input type="text" class="form-control" placeholder="First Name" name="firstName" v-model="form.firstName" />
+              <input type="text" class="form-control" placeholder="Prénom" name="firstName" v-model="form.firstName" />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-              <input type="text" class="form-control" placeholder="Last Name" name="lastName" v-model="form.lastName" />
+              <input type="text" class="form-control" placeholder="Nom" name="lastName" v-model="form.lastName" />
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
@@ -26,14 +26,14 @@
             </div>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Password" name="password" v-model="form.passwordPlainText" required />
+              <input type="password" class="form-control" placeholder="Mot de passe" name="password" v-model="form.passwordPlainText" required />
             </div>
             <button class="btn btn-primary d-block w-100" type="submit">
               {{title}}
             </button>
             <p class="fs-sm pt-3 pb-5 mb-0 text-center">
-              You already have an account ?
-              <router-link to="/" class="fw-medium">Sign in</router-link>
+              Vous avez déjà un compte ?
+              <router-link to="/" class="fw-medium">Se connecter</router-link>
             </p>
           </form>
           <!-- End form -->
@@ -92,7 +92,7 @@ export default {
       // Validate Password
       if (this.password.length < 5) {
         this.error = true;
-        this.errorMessages.message ='Password must be at least 6 chars long';
+        this.errorMessages.message ='Votre mot de passe doit contenir au moins 6 caractères.';
         // console.log(this.errorMessages.message);
         return;
       }
@@ -135,11 +135,11 @@ export default {
           this.$router.push("Bloglist");
         })
         .catch(error => {
-          this.errorMessage.message = 'There was an error : ' + error;
+          this.errorMessage.message = 'Impossible de vous enregister ! Erreur : ' + error;
           this.error = true;
           this.success = false;
           // console.log(this.error);
-          console.error('There was an error !', error);
+          console.error('Impossible de vous enregister ! Erreur : ', error);
         });
     }
   }
