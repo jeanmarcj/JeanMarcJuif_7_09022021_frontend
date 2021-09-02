@@ -53,17 +53,19 @@ MDP : admin
 ### Fonctionnalités développées pour cette application
     
 Un utilisateur peut :
-    Créer un Post (message)
-    Créer un commentaire
-    Uploader une image
-    Modifier/effacer ses propres messages (Post)
-    Modifier/effacer ses propres commentaires
-    Charger un ficher image
+* Créer un Post (message)
+* Créer un commentaire
+* Uploader une image
+* Modifier/effacer ses propres messages (Post)
+* Modifier/effacer ses propres commentaires
+* Charger un ficher image
 
 Un administrateur peut :
-    Au login, un menu spécial administrateur se débloque (les liens ne sont pas encore opérationnels)
-    Modifier tous les Posts (messages)
-    Effacer tous les posts (messages)
+* Au login, un menu spécial administrateur se débloque (les liens ne sont pas encore opérationnels)
+* Modifier tous les Posts (messages)
+* Effacer tous les posts (messages)
+   
+    
 
 Lors de la suppression d'un message, tous les commentaires rattachés sont supprimés;
 L'image est supprimée du serveur.
