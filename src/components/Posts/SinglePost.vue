@@ -33,9 +33,7 @@
                     <router-link :to="`/blogedit/${postId}`" class="meta-link" v-if="$store.state.auth.user.isAdmin || isAuthor()" title="Edit this post">
                       <i class="bi bi-pen-fill text-success"></i>
                     </router-link>
-
                 </div>
-
               </div>
             </div>
           </div>
@@ -49,8 +47,9 @@
 
     <!-- Post img -->
     <div class="row mt-5 ms-5" v-if="postMediaLink">
-      
-      <img :src="postMediaLink" class="img-fluid" alt="image">
+      <div class="w-75 mx-auto">
+        <img :src="postMediaLink" class="img-fluid" alt="image" width="400">
+      </div>
     </div>
 
     <nav class="row mb-3">
@@ -74,7 +73,9 @@
                 </div><!-- v-if -->
             </div>
           
-          <p class="text-start mb-3 pt-5 ms-5">{{comment.content}}</p>
+          <!-- Comment content -->
+          <p class="text-start mb-3 pt-2 ms-3">{{comment.content}}</p>
+
           <div class="d-flex justify-content-end align-items-center me-3">
             <div class="d-flex align-items-center">
               <img class="rounded-circle" src="../../assets/icon.png" alt="Author name" width="42">

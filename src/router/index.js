@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import About from '../views/About.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -10,19 +11,8 @@ const routes = [
     // Log into the app
     path: '/',
     name: 'Home',
-    meta: { guest: true },
+    meta: {},
     component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    meta: {
-      guest: true
-    },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     // Create a new User
@@ -34,9 +24,9 @@ const routes = [
   {
     // View all published Posts (list)
     path: '/bloglist',
-    name: 'Bloglist',
+    name: 'bloglist',
     meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogList.vue')
+    component: () => import(/* webpackChunkName: "signup" */ '../views/BlogList.vue')
   },
   {
     // Create a post
@@ -60,15 +50,28 @@ const routes = [
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogEdit.vue')
   },
   {
+    path: '/groupomania/about',
+    name: 'About',
+    meta: { guest: true},
+    component: About
+  },
+  {
     // View the user account
     path: '/account',
     name: 'Account',
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "account" */ '../views/Account.vue')
   },
+  {
+    // Redirection to blog list
+    path: '*',
+    redirect: 'bloglist',
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
