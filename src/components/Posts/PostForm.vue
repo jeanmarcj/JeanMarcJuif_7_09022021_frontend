@@ -76,16 +76,6 @@
               </div>
             </div>
 
-            <!-- User Id -->
-            <!-- <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start" for="user-id">
-                User Id<sup class="text-danger">*</sup>
-              </label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" id="user-id" placeholder="UserId" v-model="currentPost.userId" required>
-                </div>
-            </div> -->
-
             <!-- Buttons -->
             <div class="mb-3 row">
                 <div class="col-md-2"></div>
@@ -196,9 +186,9 @@ export default {
 
       fetch("http://localhost:3000/posts/" + this.currentPost.id, requestOptions)
         .then(async response => {
-          let data = await response.json();
+          await response.json();
           this.currentPost.published = status;
-          console.log(data);
+          // console.log(data);
         })
         .catch(e => {
           console.error("Une erreur est intervenue lors de la mise à jour !", e);
@@ -289,11 +279,6 @@ export default {
           this.data = data;
           this.success = true;
           this.error = false;
-          // Saving in vuex Store
-          // console.log(data.firstName);
-          // this.$store.commit('save_userFirstName', data.firstName);
-          
-          // Redirect to a route (url)
           this.$router.push("Bloglist");
         })
         .catch(error => {
