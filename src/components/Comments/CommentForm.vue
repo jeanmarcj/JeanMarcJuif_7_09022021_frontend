@@ -1,13 +1,13 @@
 <template>
       <div class="collapse ms-5" id="comment-form">
-        <form action="" class="needs-validation bg-light shadow p-4 p-lg-5 mt-4">
+        <form class="needs-validation bg-light shadow p-4 p-lg-5 mt-4">
             <div v-if="message">
               <p class="text-danger">{{message}}</p>
             </div>
             <div class="row">
                 <div class="mb-3">
                     <label class="form-label" for="com-text">Votre commentaire<sup class="text-danger ms-1">*</sup></label>
-                    <textarea class="form-control" id="com-text" rows="6" placeholder="Message..." required="" v-model="content"></textarea>
+                    <textarea class="form-control" id="com-text" rows="6" placeholder="Message..." required v-model="content"></textarea>
                     <div class="invalid-feedback">Ecrivez votre commentaire.</div>
                     <div class="valid-feedback">Ok!</div>
                 </div>
