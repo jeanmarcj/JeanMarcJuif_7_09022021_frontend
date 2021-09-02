@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -48,12 +47,6 @@ const routes = [
     name: 'Blogedit',
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "bloglist" */ '../views/BlogEdit.vue')
-  },
-  {
-    path: '/groupomania/about',
-    name: 'About',
-    meta: { guest: true},
-    component: About
   },
   {
     // View the user account

@@ -13,16 +13,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <!-- <a href="/about" class="nav-link">
-                  <i class="bi bi-info"></i>
-                  About
-              </a> -->
-              <router-link :to="{ name: 'About'}" class="nav-link">
-                <i class="bi bi-info"></i>
-                Les règles de notre messagerie
-              </router-link>
-            </li>
-            <li class="nav-item">
               <router-link to="/bloglist" class="nav-link active">
                 <i class="bi bi-newspaper"></i>
                 Messages
