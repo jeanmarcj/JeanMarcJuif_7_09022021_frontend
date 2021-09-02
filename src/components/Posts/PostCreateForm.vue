@@ -50,17 +50,11 @@
                 <div class="col-md-10">
                   <input class="form-control" type="file" ref="file" id="file-input" @change="selectFile" />
                 </div>
+                <!-- <div v-for="{file, index} in selectedFile" :key="index">
+                  {{file.name}}
+                </div> -->
+                
             </div>
-
-            <!-- Buttons upload-->
-            <!-- <div class="mb-3 row">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
-                    <button class="btn btn-success w-100" :disabled="!selectedFiles" @click="upload">
-                      Upload
-                    </button>
-                </div>
-            </div> -->
 
             <!-- Slug input unique -->
             <div class="mb-3 row align-items-center">
@@ -129,6 +123,7 @@
 
 <script>
 import UploadService from "../../services/UploadFilesService";
+import axios from 'axios';
 
 export default {
   name: 'PostCreateForm',
@@ -152,15 +147,13 @@ export default {
     };
   },
   mounted() {
-    // UploadService.getFiles()
-    //   .then(response => {
-    //     this.fileInfos = response.data;
-    //   });
 
       fetch('http://localhost:3000/files/files')
         .then( async response => {
             const data = await response.json();
             this.filesInfos = data;
+            console.log('Au chargement : ', this.filesInfos);
+            console.log("Auchargement: filesInfos = " , this.filesInfos.length);
         });
   },
   methods:{
@@ -168,33 +161,28 @@ export default {
     selectFile() {
       // console.log(this.$refs.file.files);
       this.selectedFiles = this.$refs.file.files;
-      // console.log(this.selectedFiles);
+      // console.log('Object selectedFiles', this.selectedFiles);
+      // console.log(typeof this.selectedFiles);
     },
 
     upload() {
+      // console.log('Upload processing...')
+      alert('Upload progress....');
       this.progress = 0;
       this.currentFile = this.selectedFiles.item(0);
 
+      // console.log(this.progress);
+      // console.log(this.currentFile);
+
+
       UploadService.upload(this.currentFile, event => {
         this.progress = Math.round((100 * event.loaded) / event.total);
+        // console.log('Progress ', this.progress)
       })
         .then(response => {
           this.message = response.data.message;
-          // return UploadService.getFiles();
-          fetch('http://localhost:3000/files/files')
-            .then( async response => {
-              const data = await response.json();
-              // this.filesInfos = data;
-              return data;
-            });
-        })
-        .then(files => {
-          // Array {name, url}
-          // console.log('Coucou from then(files)');
-          this.fileInfos = files;
-          
-          console.log(this.fileInfos);
-          
+          console.log('Message après le then() de lancement du service de upload :', this.message.filename.file);
+          return this.message.filename.file;
         })
         .catch((e) => {
           this.progress = 0;
@@ -202,65 +190,64 @@ export default {
           this.currentFile = undefined;
         });
       
-      this.selectedFiles = undefined;
+      // this.selectedFiles = undefined;
 
     },
 
     savePost() {
-      console.log('Update post processing...');
-
+      // console.log('Save post processing...');
+      
+      // New code sans le service :
       // Upload the file
 
-      // this.upload();
+      this.progress = 0;
+      this.currentFile = this.selectedFiles.item(0);
+      // console.log(this.currentFile.name);
 
-      // console.log(this.fileInfos);
+      let formData = new FormData();
+      formData.append("file", this.selectedFiles.item(0));
 
-      // Save in DB
-
-      fetch('http://localhost:3000/files/files')
-        .then( async response => {
-            const data = await response.json();
-            this.filesInfos = data;
-            });
-
-      console.log(this.filesInfos);
-
-      let totalElts = this.filesInfos.length;
-      let currentImgUrl = this.filesInfos[totalElts - 1].url;
-      console.log(currentImgUrl);
-      this.media = this.currentImgUrl;
-      // console.log(this.$store);
-      // console.log(this.$store.state.auth.user.userId);
-
-      console.log(this.media);
-
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: this.$store.state.auth.user.userId,
-          title: this.title,
-          media: this.media,
-          content: this.content,
-          slug: this.slug,
-          published: this.published,
-          })
-      };
-
-      // console.log(requestOptions);
-
-      fetch("http://localhost:3000/posts/", requestOptions)
-        .then(async response => {
-          let data = await response.json();
-          this.message = 'Message créé !';
-          console.log('Response après push', data);
-          // this.$router.push("Bloglist");
-          this.$router.push({ name: 'bloglist' });
+        axios.post("files/upload", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
         })
-        .catch(e => {
-          console.error("Une erreur est intervenue lors de la création du Post !", e);
-          this.message = "Une erreur est intervenue lors de la création du Post ! !";
+        .then(response => {
+          const result = response;
+          console.log(JSON.stringify(result.data.fileName.file));
+          // const tempName = result.data.fileName.file;
+     
+          this.media = 'http://localhost:3000/images/' + result.data.fileName.file
+
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            userId: this.$store.state.auth.user.userId,
+            title: this.title,
+            media: this.media,
+            content: this.content,
+            slug: this.slug,
+            published: this.published,
+            })
+          };
+
+          console.log(requestOptions);
+
+          fetch("http://localhost:3000/posts/", requestOptions)
+            .then(async response => {
+            let data = await response.json();
+            this.message = 'Message créé !';
+            console.log('Response après post', data);
+            // this.$router.push("Bloglist");
+            this.$router.push({ name: 'bloglist' });
+          })
+          .catch(e => {
+            console.error("Une erreur est intervenue lors de la création du Post !", e);
+            this.message = "Une erreur est intervenue lors de la création du Post !";
         });
+
+        })// fin de then()
     }
   }
 }
