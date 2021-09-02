@@ -3,7 +3,23 @@ node_modules
 /dist
 Aide-mémoire.txt
 
+backend/.DS_Store
+backend/db.config.bak.js
+backend/user.controller.bak.js
+backend/post.controller.bak.js
+backend/populateDB.txt
 
+# Logs
+backend/logs
+backend/*.log
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/node_modules/
+backend/jspm_packages/
+backend/.npm
+
+# Frontend
 # local env files
 .env.local
 .env.*.local
