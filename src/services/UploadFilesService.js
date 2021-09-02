@@ -1,15 +1,18 @@
 import axios from 'axios';
 
 class UploadFileService {
-    upload(file, onUploadProgress) {
-        let formData = new FormData();
 
+    upload(file, onUploadProgress) {
+
+        // console.log("file dans UploadfileService", file)
+        alert('UploadFileService ...')
+
+        let formData = new FormData();
         formData.append("file", file);
 
         return axios.post("files/upload", formData, {
             headers: {
-                "Content-Type": "multipart/form-data",
-                "Accept": "/",
+                "Content-Type": "multipart/form-data"
             },
             onUploadProgress
         });
