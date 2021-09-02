@@ -31,16 +31,40 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
+L'application front écoute le port 8080.
+
+### Pour se connecter à l'application :
+
+Compte utilisateur :
+Prénom : user
+Nom : user
+Mail : user@exemple.com
+MDP : user
+
+Compte administrateur :
+
+Prénom : Admin
+Nom : Admin
+Mail : admin@exemple.com
+MDP : admin
 
 ============================================================================
 
-Fonctionnalités principale de l'application
-
-Un administrateur peut :
-    Modifier tous les Posts
+### Fonctionnalités développées pour cette application
     
 Un utilisateur peut :
-    Créer un Post
+    Créer un Post (message)
     Créer un commentaire
     Uploader une image
-    Modifier uniquement sont Post
+    Modifier/effacer ses propres messages (Post)
+    Modifier/effacer ses propres commentaires
+    Charger un ficher image
+
+Un administrateur peut :
+    Au login, un menu spécial administrateur se débloque (les liens ne sont pas encore opérationnels)
+    Modifier tous les Posts (messages)
+    Effacer tous les posts (messages)
+
+Lors de la suppression d'un message, tous les commentaires rattachés sont supprimés;
+L'image est supprimée du serveur.
+
