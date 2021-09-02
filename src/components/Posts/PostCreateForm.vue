@@ -152,28 +152,20 @@ export default {
         .then( async response => {
             const data = await response.json();
             this.filesInfos = data;
-            console.log('Au chargement : ', this.filesInfos);
-            console.log("Auchargement: filesInfos = " , this.filesInfos.length);
+            // console.log('Au chargement : ', this.filesInfos);
+            // console.log("Auchargement: filesInfos = " , this.filesInfos.length);
         });
   },
   methods:{
 
     selectFile() {
-      // console.log(this.$refs.file.files);
       this.selectedFiles = this.$refs.file.files;
-      // console.log('Object selectedFiles', this.selectedFiles);
-      // console.log(typeof this.selectedFiles);
     },
 
     upload() {
       // console.log('Upload processing...')
-      alert('Upload progress....');
       this.progress = 0;
       this.currentFile = this.selectedFiles.item(0);
-
-      // console.log(this.progress);
-      // console.log(this.currentFile);
-
 
       UploadService.upload(this.currentFile, event => {
         this.progress = Math.round((100 * event.loaded) / event.total);
@@ -195,10 +187,6 @@ export default {
     },
 
     savePost() {
-      // console.log('Save post processing...');
-      
-      // New code sans le service :
-      // Upload the file
 
       this.progress = 0;
       this.currentFile = this.selectedFiles.item(0);
@@ -214,7 +202,7 @@ export default {
         })
         .then(response => {
           const result = response;
-          console.log(JSON.stringify(result.data.fileName.file));
+          // console.log(JSON.stringify(result.data.fileName.file));
           // const tempName = result.data.fileName.file;
      
           this.media = 'http://localhost:3000/images/' + result.data.fileName.file
@@ -232,13 +220,13 @@ export default {
             })
           };
 
-          console.log(requestOptions);
+          // console.log(requestOptions);
 
           fetch("http://localhost:3000/posts/", requestOptions)
             .then(async response => {
-            let data = await response.json();
+            await response.json();
             this.message = 'Message créé !';
-            console.log('Response après post', data);
+            // console.log('Response après post', data);
             // this.$router.push("Bloglist");
             this.$router.push({ name: 'bloglist' });
           })
