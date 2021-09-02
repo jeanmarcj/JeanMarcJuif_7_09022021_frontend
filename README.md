@@ -3,7 +3,7 @@
 GitHub repository : [lien](https://github.com/jeanmarcj/JeanMarcJuif_7_09022021_frontend.git)
 
 
-## Project setup
+## Project setup to lunch the front-end
 ```
 npm install
 ```
@@ -70,3 +70,21 @@ Un administrateur peut :
 Lors de la suppression d'un message, tous les commentaires rattachés sont supprimés;
 L'image est supprimée du serveur.
 
+============================================================================
+### Pour lancer le serveur - dossier backend du projet :
+
+Dans le dossier backend :
+
+Pour installer les dépendances du projet :
+
+```
+npm install
+```
+
+Pour lancer le serveur sur le port 3000 :
+
+```
+npm run start
+```
+
+Consulter le README.md dans le répertoire 'backend' du projet
