@@ -60,19 +60,20 @@
                 </div>
             </div>
 
-            <!-- Published btn -->
-            <div class="mb-3 row align-items-center">
-              <label class="col-md-2 col-form-label text-start">
+            <!-- Publish check box -->
+
+            <div class="row mb-3 align-items-center">
+              <div class="col-md-2 text-start col-form-label">
                 <strong>Status</strong>
-              </label>
+              </div>
               <div class="col-md-10 text-start">
-                {{ currentPost.published ? "Publié - " : "En attente de publication - " }}
-                <button class="btn btn-warning btn-sm me-2" v-if="currentPost.published" @click="updatePublished(false)">
-                  Ne pas publier
-                </button>
-                <button v-else class="btn btn-success btn-sm me-2" @click="updatePublished(true)">
-                  Publier ce message
-                </button>
+                <input type="checkbox" value="" id="checkPublish" class="form-check-input" v-model="currentPost.published" @click="updatePublished">
+                <label v-if="currentPost.published" for="checkPublish" class="form-check-label ms-2 badge bg-success">
+                  Ce message est publié
+                  </label>
+                <label class="form-check-lable ms-2 badge bg-warning" v-else>
+                  Ce message n'est pas publié ! Cocher pour publier.
+                </label>
               </div>
             </div>
 
@@ -131,7 +132,7 @@ export default {
       slug: '',
       userId: '',
       createdAt: '',
-      published: true,
+      published: null,
       errorMessages: {
         message: ''
       },
@@ -144,7 +145,7 @@ export default {
   methods:{
 
     getPost(id) {
-      console.log('Get Post... processing... with id:' + id);
+      // console.log('Get Post... processing... with id:' + id);
       fetch("http://localhost:3000/posts/" + id)
       .then(async response => {
         this.currentPost = await response.json();
@@ -168,18 +169,19 @@ export default {
         return false;
     },
 
-    updatePublished(status) {
-      // console.log('Update Published method : status ', status);
+    updatePublished() {
+      // console.log('Update Published method : status ', this.currentPost.published);
 
+      if (this.currentPost.published === true) {
+        this.currentPost.published = false
+      } else {
+        this.currentPost.published = true
+      }
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: this.currentPost.title,
-          media: this.currentPost.media,
-          content: this.currentPost.content,
-          slug: this.currentPost.slug,
-          published: status,
+          published: this.currentPost.published,
           publishedAT: new Date().getTime()
           })
       };
@@ -187,8 +189,10 @@ export default {
       fetch("http://localhost:3000/posts/" + this.currentPost.id, requestOptions)
         .then(async response => {
           await response.json();
-          this.currentPost.published = status;
-          // console.log(data);
+          // console.log(response);
+          if (response.ok) {
+            console.log('Status du message mis à jour !')
+          }
         })
         .catch(e => {
           console.error("Une erreur est intervenue lors de la mise à jour !", e);
