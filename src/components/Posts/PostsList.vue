@@ -149,6 +149,12 @@ article {
     }
 }
 
+.card {
+    border-radius: 0;
+    border-top-left-radius: calc(1rem - 1px);
+    border-bottom-left-radius: calc(1rem - 1px);
+}
+
 .card-hover {
     transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
 }
