@@ -5,7 +5,7 @@ import auth from './modules/auth';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+let store = new Vuex.Store({
   state: {
     applicationName: 'Welcome on your Expression app',
   },
@@ -23,3 +23,8 @@ export default new Vuex.Store({
   },
   plugins: [createPersistedState()]
 });
+
+//Permet de récupérer la variable store dans la console du navigateur
+global.store = store
+
+export default store
