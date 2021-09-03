@@ -12,12 +12,12 @@
 
           <!-- Content -->
           <div class="col-lg-9 content py-4 mb-2 mb-sm-0 pb-sm-5">
+            <!-- Test if user is admin -->
             <div class="home text-start ms-5">
               <HelloWorld msg="Gestion des utilisateurs" v-if="$store.state.auth.user.isAdmin"/>
               <HelloWorld msg="Gestion de votre compte" v-else/>
             </div>
             <div class="text-start ps-5">
-              <p>{{$store.state.auth}}</p>
             </div>
 
             <div class="row mb-3 ms-5 text-start" v-if="$store.state.auth.user.isAdmin">
