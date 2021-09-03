@@ -5,13 +5,9 @@
             <article class="card card-horizontal card-hover mb-grid-gutter" style="max-width: 52rem;" v-for="post in posts" :key="post.id">
                 <a :href="`/post/${post.id}`" class="card-img-top" :style="{ backgroundImage: `url(${post.media})`}">
                 </a>
-                <!-- <router-link :to="`/post/${post.id}`" :style="{ backgroundImage: `url(${require('@/assets/icon.png')})`}">
-                </router-link> -->
-                <!-- </div> -->
-                <!-- <div class="col-md-8"> -->
                 <div class="card-body">
                     <h2 class="h4 mb-4 nav-heading text-start">
-                        <router-link :to="`/post/${post.id}`">{{post.title}}</router-link>
+                        <router-link :to="`/post/${post.id}`" :title="value = 'Lire : ' + post.title">{{post.title}}</router-link>
                     </h2>
                     <router-link to="Account" class="d-flex meta-link fs-sm align-items-center pt-3">
                         <img class="rounded-circle" src="../../assets/icon.png" width="36" alt="Author's Name">
