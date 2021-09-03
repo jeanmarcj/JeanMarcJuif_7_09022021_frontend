@@ -15,9 +15,9 @@
             <div class="home text-start ms-5">
               <HelloWorld msg="Groupomania Messagerie" />
             </div>
-            <div class="mb-5" style="max-width: 49rem;">
-              <router-link to="post/newpost" class="btn btn-primary w-100 ms-5">Je souhaite dire quelque chose...</router-link>
-           </div>
+            <!-- <div class="container-fluid my-5 ms-5"> -->
+              <router-link to="post/newpost" class="btn btn-primary w-80 my-5 ms-5" style="max-width: 52rem;">Je souhaite dire quelque chose...</router-link>
+           <!-- </div> -->
             <div class="">
               <PostsList />
             </div>
