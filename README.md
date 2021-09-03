@@ -59,11 +59,13 @@ Un utilisateur peut :
 * Modifier/effacer ses propres messages (Post)
 * Modifier/effacer ses propres commentaires
 * Charger un ficher image
+* Publier ou ne pas publier un de ses message (case à cocher)
 
 Un administrateur peut :
 * Au login, un menu spécial administrateur se débloque (les liens ne sont pas encore opérationnels)
 * Modifier tous les Posts (messages)
 * Effacer tous les posts (messages)
+* Publier ou ne pas publier un message (case à cocher)
    
     
 
